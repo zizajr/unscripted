@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Rounded square background -->
+  <rect width="32" height="32" rx="6" fill="#0A0A0A"/>
+  <!-- Three bars: Gold | Purple | Gold -->
+  <!-- Left gold bar -->
+  <rect x="7"  y="7" width="5" height="18" rx="1" fill="#F2B705"/>
+  <!-- Center purple bar -->
+  <rect x="13.5" y="7" width="5" height="18" rx="1" fill="#8B2FC9"/>
+  <!-- Right gold bar -->
+  <rect x="20" y="7" width="5" height="18" rx="1" fill="#F2B705"/>
+</svg>
