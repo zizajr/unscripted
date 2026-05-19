@@ -11,7 +11,7 @@ export default function HeroSection() {
       <div className="absolute top-1/4 left-1/3 w-[800px] h-[800px] rounded-full bg-violet/5 blur-[120px] pointer-events-none animate-[slowPan_20s_ease-in-out_infinite_alternate]" />
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full bg-gold/4 blur-[100px] pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-10 pt-24 pb-24 w-full">
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-10 pt-32 pb-20 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
             {/* Three-bar staggered entrance */}
@@ -93,7 +93,7 @@ export default function HeroSection() {
           >
             <div className="relative">
               <div
-                className="text-[18rem] font-black leading-none text-white/3 select-none"
+                className="text-[14rem] md:text-[18rem] font-black leading-none text-white/[0.02] select-none translate-y-8"
                 style={{ fontFamily: "var(--font-playfair)" }}
               >
                 MS

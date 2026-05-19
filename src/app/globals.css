@@ -13,6 +13,8 @@
   --font-display: var(--font-playfair), Georgia, serif;
   --font-body:    var(--font-space-grotesk), system-ui, sans-serif;
   --font-accent:  var(--font-bebas), Impact, sans-serif;
+
+  --section-spacing: clamp(5rem, 10vw, 8rem);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -41,11 +43,16 @@ img { max-width: 100%; display: block; }
 .grid-overlay {
   background-image: repeating-linear-gradient(
     90deg,
-    rgba(255,255,255,0.025) 0,
-    rgba(255,255,255,0.025) 1px,
+    rgba(255,255,255,0.015) 0,
+    rgba(255,255,255,0.015) 1px,
     transparent 0,
     transparent 80px
   );
+}
+
+.section-padding {
+  padding-top: var(--section-spacing);
+  padding-bottom: var(--section-spacing);
 }
 
 /* ── Typography helpers ── */
@@ -55,9 +62,13 @@ img { max-width: 100%; display: block; }
 
 /* ── Focus visible ── */
 :focus-visible {
-  outline: 2px solid var(--color-gold);
-  outline-offset: 3px;
+  outline: 1px solid var(--color-gold);
+  outline-offset: 4px;
 }
+
+/* Fix for potential glowing blue lines in some browsers */
+* { outline-color: transparent; }
+:focus-visible { outline-color: var(--color-gold); }
 
 /* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 6px; }

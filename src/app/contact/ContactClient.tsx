@@ -99,7 +99,7 @@ export default function ContactClient() {
                       <label className="block text-xs text-cream/40 mb-2 tracking-widest" style={{ fontFamily: "var(--font-bebas)", letterSpacing: "0.15em" }}>Tell us about your project or enquiry</label>
                       <textarea rows={5} placeholder="The more context you give us, the more useful our reply." className="w-full bg-slate/30 border border-white/10 text-cream px-4 py-3 text-sm focus:border-gold focus:outline-none transition-colors placeholder-cream/20 resize-none" style={{ fontFamily: "var(--font-space-grotesk)" }} />
                     </div>
-                    <button type="submit" className="w-full py-4 bg-gold text-ink font-semibold text-sm hover:bg-gold/90 transition-colors duration-200" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+                    <button type="submit" className="w-full py-4 bg-gold text-ink font-bold text-sm hover:bg-gold/90 transition-all duration-200 shadow-lg shadow-gold/10" style={{ fontFamily: "var(--font-space-grotesk)" }}>
                       Send Message
                     </button>
                     <p className="text-xs text-cream/30 text-center" style={{ fontFamily: "var(--font-space-grotesk)" }}>We respond within 48 hours. Every message is read by a real person.</p>
@@ -129,9 +129,10 @@ export default function ContactClient() {
           <Reveal delay={0.1}>
             <SectionLabel>WHERE WE WORK</SectionLabel>
             <h3 className="text-2xl font-bold text-cream mb-4" style={{ fontFamily: "var(--font-playfair)" }}>Based across two continents. Producing everywhere.</h3>
-            <p className="text-cream/50 text-sm mb-4" style={{ fontFamily: "var(--font-space-grotesk)" }}>Africa · Middle East · [FILL IN specific cities]</p>
+            <p className="text-cream/50 text-base mb-4" style={{ fontFamily: "var(--font-space-grotesk)" }}>Dubai · Kigali · Johannesburg · London · New York</p>
             <p className="text-cream/40 text-sm leading-relaxed" style={{ fontFamily: "var(--font-space-grotesk)" }}>We produce on location. If your city is on our list, we may already be there.</p>
           </Reveal>
+
         </div>
       </section>
 

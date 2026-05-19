@@ -42,8 +42,8 @@ export default function ShowsPageClient() {
       </section>
 
       {/* Filters */}
-      <section className="sticky top-16 z-30 bg-ink/95 backdrop-blur-md border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-4 flex gap-2 overflow-x-auto no-scrollbar">
+      <section className="sticky top-16 z-30 bg-ink/95 backdrop-blur-md border-b border-white/5 py-2">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-4 flex flex-wrap gap-3 overflow-x-auto no-scrollbar">
           {filters.map((f) => (
             <button
               key={f}

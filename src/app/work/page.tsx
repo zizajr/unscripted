@@ -140,8 +140,8 @@ export default function WorkPage() {
             <h2 className="text-4xl md:text-5xl font-bold text-cream mb-4" style={{ fontFamily: "var(--font-playfair)" }}>
               Ready to start something?
             </h2>
-            <p className="text-cream/50 mb-10 text-lg max-w-md mx-auto" style={{ fontFamily: "var(--font-space-grotesk)" }}>
-              Tell us about your project. We'll tell you if we're the right fit.
+            <p className="text-cream/50 mb-10 text-lg max-w-xl mx-auto leading-relaxed" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+              Tell us about your project. We'll tell you if we're the right fit for your story.
             </p>
             <Link
               href="/contact"
