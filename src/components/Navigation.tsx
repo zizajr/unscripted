@@ -89,7 +89,7 @@ export default function Navigation() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-ink/98 flex flex-col pt-24 px-8 gap-6"
+            className="fixed inset-0 z-40 bg-ink flex flex-col pt-24 px-8 gap-6"
           >
             {navLinks.map(({ href, label }) => (
               <Link
