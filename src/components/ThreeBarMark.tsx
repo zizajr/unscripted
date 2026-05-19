@@ -1,30 +1,33 @@
 interface ThreeBarMarkProps {
   size?: number;
   className?: string;
+  /** Show the rounded-square background (ink). Useful for standalone logo usage. */
+  withBackground?: boolean;
 }
 
-export default function ThreeBarMark({ size = 32, className = "" }: ThreeBarMarkProps) {
-  const barW  = size * 0.22;
-  const barH  = size;
-  const gap   = size * 0.12;
-  const total = barW * 3 + gap * 2;
-
+/**
+ * Official Unscripted three-bar mark.
+ * Gold (full height) | Purple (shorter, bottom-aligned) | Gold (full height)
+ * Proportions mirror the official favicon SVG (viewBox 0 0 100 100).
+ */
+export default function ThreeBarMark({ size = 32, className = "", withBackground = false }: ThreeBarMarkProps) {
   return (
     <svg
-      width={total}
-      height={barH}
-      viewBox={`0 0 ${total} ${barH}`}
-      fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
+      viewBox="0 0 100 100"
+      width={size}
+      height={size}
+      role="img"
+      aria-label="Unscripted logo mark"
       className={className}
     >
-      {/* Gold bar left */}
-      <rect x={0}                    y={0} width={barW} height={barH} fill="#F2B705" rx={1} />
-      {/* Purple bar center */}
-      <rect x={barW + gap}           y={0} width={barW} height={barH} fill="#8B2FC9" rx={1} />
-      {/* Gold bar right */}
-      <rect x={(barW + gap) * 2}     y={0} width={barW} height={barH} fill="#F2B705" rx={1} />
+      {withBackground && <rect width="100" height="100" rx="18" fill="#0A0A0A" />}
+      {/* Left gold bar — full height */}
+      <rect x="22" y="18" width="16" height="64" rx="3" fill="#F2B705" />
+      {/* Center purple bar — shorter, starts lower */}
+      <rect x="42" y="35" width="16" height="47" rx="3" fill="#8B2FC9" />
+      {/* Right gold bar — full height */}
+      <rect x="62" y="18" width="16" height="64" rx="3" fill="#F2B705" />
     </svg>
   );
 }
