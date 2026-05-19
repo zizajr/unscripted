@@ -26,6 +26,7 @@ const bebasNeue = Bebas_Neue({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://theunscripted.xyz"),
   title: {
     default: "Unscripted Productions",
     template: "%s · Unscripted Productions",
