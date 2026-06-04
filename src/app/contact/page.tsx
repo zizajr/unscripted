@@ -2,8 +2,13 @@ import type { Metadata } from "next";
 import ContactClient from "./ContactClient";
 
 export const metadata: Metadata = {
-  title: "Contact",
-  description: "Work with us. We're looking for guests, partners, brands, and projects worth making. We respond in 48 hours.",
+  title: "Contact Unscripted — Start a Project",
+  description:
+    "Ready to defy reason? Get in touch with the Unscripted team. hello@theunscripted.xyz",
+  openGraph: {
+    title: "Contact Unscripted — Start a Project",
+    description: "Ready to defy reason? Get in touch with the Unscripted team.",
+  },
 };
 
 export default function ContactPage() {

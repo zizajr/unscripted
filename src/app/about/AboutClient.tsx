@@ -1,192 +1,237 @@
 "use client";
-import { motion } from "framer-motion";
-import Reveal from "@/components/Reveal";
-import SectionLabel from "@/components/SectionLabel";
-import ThreeBarMark from "@/components/ThreeBarMark";
+import { useRef } from "react";
 import Link from "next/link";
+import { motion, useInView } from "framer-motion";
 
-const principles = [
-  {
-    name: "PRIMARY SOURCES ONLY",
-    desc: "We don't cover the story about the story. We talk to the person who was in the room.",
-  },
-  {
-    name: "NO SCRIPTS, NO SOFTBALLS",
-    desc: "Every guest knows we're going to ask the real question. That's why they agree to come on.",
-  },
-  {
-    name: "CITY-FIRST, GLOBALLY DISTRIBUTED",
-    desc: "We don't parachute in. We embed in the cities we cover and let the story come from the ground up.",
-  },
-  {
-    name: "PRODUCTION QUALITY IS AN ARGUMENT",
-    desc: "A show that sounds great says: this story deserves to be heard. We make that argument with every episode.",
-  },
-];
+const EASE = [0.21, 0.47, 0.32, 0.98] as const;
 
-const placeholderTeam = [
-  { name: "[FULL NAME]", role: "[ROLE TITLE]", bio: "[1-sentence bio]", city: "[City]" },
-  { name: "[FULL NAME]", role: "[ROLE TITLE]", bio: "[1-sentence bio]", city: "[City]" },
-  { name: "[FULL NAME]", role: "[ROLE TITLE]", bio: "[1-sentence bio]", city: "[City]" },
+function FadeUp({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 28 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.7, delay, ease: EASE }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+const team = [
+  {
+    initials: "GN",
+    name: "Gavin Ngabonziza",
+    title: "Business Development & Product Lead",
+    accent: "#F2B705",
+    bio: `Gavin Ngabonziza is the Business Development and Product lead at Unscripted. With 8 years of experience across finance, business, and product development, Gavin possesses a diverse skill set that encompasses Business Development, UIX Design, Product Design, and Project Management.
+
+His experience includes serving as Business Development Manager at Zelomove Technologies Ltd, UIX Designer at TicketDaddy Inc., Business Development Executive at Hamz Ltd, and Honorary Consul of Namibia in Uganda. Notably, Gavin served as Legal and Development assistant to the Honorary Consul of Namibia in Uganda — Ambassador Patrick Bitature — for 5 years.`,
+  },
+  {
+    initials: "BA",
+    name: "Bolton Abdulmalik",
+    title: "Creative Director",
+    accent: "#8B2FC9",
+    bio: `A maestro orchestrating visual symphonies, Bolton Abdulmalik is the Creative Director at Unscripted. As the creative force behind the agency's visual identity, Bolton combines an eye for detail with a passion for design.
+
+Notable clients: FX Pesa, Nyaka Global, TicketDaddy.`,
+  },
+  {
+    initials: "BB",
+    name: "Bruce Bagarukayo",
+    title: "Co-CTO",
+    accent: "#F2B705",
+    bio: `Bruce Bagarukayo is a backend engineer and technology leader with a rare combination of financial technology depth and open-source platform contribution in East Africa.
+
+He authored and published the first Python SDK for the MTN Mobile Money API on PyPI — making it the first publicly available open-source MTN MoMo integration library for East African developers. He served as CTO at Hamz Ltd (leading the build of HamzPay mobile wallet) and CTO at TicketDaddy Inc (designing the Smart Tickets platform — 600,000+ ticket transactions). He also led the Zelomove production database schemas, MTN MoMo integration, and full DevOps pipeline.`,
+  },
+  {
+    initials: "KE",
+    name: "Kayondo Edward",
+    title: "Co-CTO",
+    accent: "#8B2FC9",
+    bio: `Edward Kayondo is a full-stack and mobile engineer who began his technology career as a self-taught developer in high school, building a functional social media platform.
+
+He served as Tech Lead for the US Presidential campaign of Gabriel Coenho, co-founded JS Kampala (a JavaScript developer community in Kampala, Uganda), served as Software Lead at Andela, and built the HamzPay iOS application. He served as Co-CTO at TicketDaddy alongside Bruce Bagarukayo, and leads all frontend and mobile engineering at Zelomove Technologies Ltd.`,
+  },
 ];
 
 export default function AboutClient() {
   return (
     <>
-      {/* Page Hero */}
-      <section className="relative min-h-[60vh] bg-ink flex items-end pb-24 pt-40 grid-overlay overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-ink via-ink/80 to-ink pointer-events-none" />
-        <div className="relative max-w-7xl mx-auto px-6 lg:px-10">
-          <SectionLabel>ABOUT US</SectionLabel>
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-black text-cream leading-tight max-w-3xl"
-            style={{ fontFamily: "var(--font-playfair)" }}
-          >
-            Built from a gap in the conversation.
-          </motion.h1>
+      {/* ── HERO ── */}
+      <section
+        style={{ background: "#0A0A0A", paddingTop: 160 }}
+        aria-labelledby="about-hero-heading"
+      >
+        {/* Grain */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E\")",
+            backgroundSize: "300px",
+          }}
+        />
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 clamp(24px,6.25vw,80px) clamp(80px,10vw,120px)" }}>
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="mt-6 text-lg text-cream/60 max-w-2xl leading-relaxed"
-            style={{ fontFamily: "var(--font-space-grotesk)" }}
+            transition={{ duration: 0.6 }}
+            style={{ fontFamily: "var(--font-bebas)", fontSize: 12, letterSpacing: "0.35em", color: "#F2B705", marginBottom: 32 }}
           >
-            We looked for a show that covered business and technology the way we experienced it. We couldn't find one. So we built the studio, hired the people, and started recording.
+            WHO WE ARE
           </motion.p>
+
+          <motion.blockquote
+            id="about-hero-heading"
+            initial={{ opacity: 0, y: 32 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(28px,4.5vw,64px)",
+              fontWeight: 900,
+              fontStyle: "italic",
+              color: "#F8F5EE",
+              lineHeight: 1.1,
+              maxWidth: 960,
+              marginBottom: 48,
+            }}
+          >
+            &ldquo;We don&apos;t just provide services. We craft narratives,
+            design experiences, and forge brand-changing connections.&rdquo;
+          </motion.blockquote>
+
+          {/* Gold rule */}
+          <motion.div
+            initial={{ scaleX: 0, originX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            style={{ height: 3, background: "#F2B705", maxWidth: 80, marginBottom: 0 }}
+          />
         </div>
       </section>
 
-      {/* Narrative Section 1: How We Started */}
-      <section className="section-padding bg-ink">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start">
-            <div className="lg:col-span-5">
-              <SectionLabel>THE ORIGIN</SectionLabel>
-              <Reveal>
-                <h2 className="text-4xl md:text-5xl font-bold text-cream mb-8" style={{ fontFamily: "var(--font-playfair)" }}>
-                  The show that didn't exist yet.
-                </h2>
-              </Reveal>
-            </div>
-            <div className="lg:col-span-7 space-y-6 text-cream/70 text-lg leading-relaxed" style={{ fontFamily: "var(--font-space-grotesk)" }}>
-              <Reveal delay={0.1}>
-                <p>Business journalism has always had a geography problem. The stories coming out of New York and San Francisco are told at length, in detail, with resources behind them. The stories coming out of Kigali, Doha, Lagos, and Dubai — the cities where some of the most consequential business decisions are being made — are treated as footnotes.</p>
-              </Reveal>
-              <Reveal delay={0.2}>
-                <p>Unscripted Productions was founded to treat these cities with the same seriousness that traditional media reserves for a handful of western zip codes. Not "emerging market" content. Just content. About the people changing the world from the ground up.</p>
-              </Reveal>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Narrative Section 2: Philosophy */}
-      <section className="section-padding bg-slate border-y border-white/5">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start">
-            <div className="lg:col-span-5 lg:order-2">
-              <SectionLabel>OUR PHILOSOPHY</SectionLabel>
-              <Reveal>
-                <h2 className="text-4xl md:text-5xl font-bold text-cream mb-8" style={{ fontFamily: "var(--font-playfair)" }}>
-                  No pre-approved questions. No scripts.
-                </h2>
-              </Reveal>
-            </div>
-            <div className="lg:col-span-7 lg:order-1 space-y-6 text-cream/70 text-lg leading-relaxed" style={{ fontFamily: "var(--font-space-grotesk)" }}>
-              <Reveal delay={0.1}>
-                <p>The name says everything. We don't give guests a script. The best conversations happen when neither person knows exactly where it's going. We prepare obsessively — researching every angle and every deal — but the actual exchange is always real.</p>
-              </Reveal>
-              <Reveal delay={0.2}>
-                <p>No PR handlers. No softball questions. Just the kind of conversation you'd have if the cameras weren't there. That's why leaders agree to talk to us.</p>
-              </Reveal>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Principles Grid */}
-      <section className="section-padding bg-ink">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <Reveal>
-            <SectionLabel>HOW WE WORK</SectionLabel>
-            <h2 className="text-4xl md:text-5xl font-bold text-cream mb-16" style={{ fontFamily: "var(--font-playfair)" }}>
-              Four principles. No exceptions.
+      {/* ── GUIDING PRINCIPLES — Cream ── */}
+      <section style={{ background: "#F8F5EE" }} aria-labelledby="principles-heading">
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(80px,10vw,120px) clamp(24px,6.25vw,80px)" }}>
+          <FadeUp>
+            <p style={{ fontFamily: "var(--font-bebas)", fontSize: 12, letterSpacing: "0.35em", color: "#F2B705", marginBottom: 24 }}>
+              HOW WE OPERATE
+            </p>
+            <h2 id="principles-heading" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(32px,4vw,52px)", fontWeight: 900, color: "#0A0A0A", lineHeight: 1.1, marginBottom: 56 }}>
+              Principles we live by.
             </h2>
-          </Reveal>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/5 border border-white/5">
-            {principles.map((p, i) => (
-              <Reveal key={p.name} delay={i * 0.1}>
-                <div className="bg-ink p-12 group hover:bg-slate/40 transition-colors duration-300 h-full">
-                  <p className="text-gold font-accent text-3xl mb-4" style={{ fontFamily: "var(--font-bebas)", letterSpacing: "0.05em" }}>
-                    {String(i + 1).padStart(2, "0")}
-                  </p>
-                  <h3 className="text-lg font-semibold tracking-widest text-cream mb-4" style={{ fontFamily: "var(--font-bebas)", letterSpacing: "0.15em" }}>
-                    {p.name}
-                  </h3>
-                  <p className="text-cream/50 text-base leading-relaxed" style={{ fontFamily: "var(--font-space-grotesk)" }}>
-                    {p.desc}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
+          </FadeUp>
 
-      {/* Team Section */}
-      <section className="section-padding bg-slate">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-            <Reveal>
-              <SectionLabel>THE TEAM</SectionLabel>
-              <h2 className="text-4xl md:text-5xl font-bold text-cream" style={{ fontFamily: "var(--font-playfair)" }}>
-                The producers behind the mic.
-              </h2>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <p className="text-cream/50 max-w-sm" style={{ fontFamily: "var(--font-space-grotesk)" }}>
-                Based across Africa and the Middle East. Headquartered in Dubai and Kigali.
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <FadeUp delay={0.1}>
+              <h3 style={{ fontFamily: "var(--font-body)", fontSize: 20, fontWeight: 600, color: "#0A0A0A", marginBottom: 16 }}>
+                Collaborative Approach
+              </h3>
+              <div style={{ height: 3, background: "#F2B705", width: 40, marginBottom: 20 }} />
+              <p style={{ fontFamily: "var(--font-body)", fontSize: 17, color: "#3D3D3D", lineHeight: 1.75 }}>
+                At Unscripted, collaboration is ingrained in our culture. Our team operates as a cohesive unit — pooling diverse talents to deliver comprehensive solutions. This extends to every client partnership: your input is essential to every project&apos;s success.
               </p>
-            </Reveal>
+            </FadeUp>
+
+            <FadeUp delay={0.2}>
+              <h3 style={{ fontFamily: "var(--font-body)", fontSize: 20, fontWeight: 600, color: "#0A0A0A", marginBottom: 16 }}>
+                Commitment to Excellence
+              </h3>
+              <div style={{ height: 3, background: "#F2B705", width: 40, marginBottom: 20 }} />
+              <p style={{ fontFamily: "var(--font-body)", fontSize: 17, color: "#3D3D3D", lineHeight: 1.75 }}>
+                Excellence is not just a goal — it&apos;s our standard. From the first client interaction to final delivery, we uphold the highest standards of quality, creativity, and professionalism.
+              </p>
+            </FadeUp>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {placeholderTeam.map((member, i) => (
-              <Reveal key={i} delay={i * 0.1}>
-                <div className="group">
-                  <div className="aspect-[4/5] bg-ink/50 border border-white/5 mb-6 relative overflow-hidden flex items-center justify-center text-cream/10 text-xs tracking-widest uppercase" style={{ fontFamily: "var(--font-bebas)" }}>
-                    <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent opacity-50" />
-                    [HEADSHOT]
+        </div>
+      </section>
+
+      {/* ── TEAM — Ink ── */}
+      <section style={{ background: "#0A0A0A" }} aria-labelledby="team-page-heading">
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(80px,10vw,120px) clamp(24px,6.25vw,80px)" }}>
+          <FadeUp>
+            <p style={{ fontFamily: "var(--font-bebas)", fontSize: 12, letterSpacing: "0.35em", color: "rgba(248,245,238,0.45)", marginBottom: 24 }}>
+              OUR TEAM
+            </p>
+            <h2 id="team-page-heading" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(36px,4vw,56px)", fontWeight: 900, color: "#F8F5EE", lineHeight: 1.1, marginBottom: 64 }}>
+              The heartbeat<br />of our success.
+            </h2>
+          </FadeUp>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+            {team.map((member, i) => (
+              <FadeUp key={member.name} delay={i * 0.12}>
+                <article style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+                  {/* Photo block */}
+                  <div style={{
+                    width: "100%",
+                    aspectRatio: "4/3",
+                    background: "#1C1C2E",
+                    borderTop: `3px solid ${member.accent}`,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    position: "relative",
+                    overflow: "hidden",
+                    marginBottom: 28,
+                  }}>
+                    <div aria-hidden="true" style={{
+                      position: "absolute", inset: 0,
+                      background: `radial-gradient(ellipse at bottom right, ${member.accent}18 0%, transparent 70%)`,
+                    }} />
+                    <span style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: "clamp(48px,8vw,80px)",
+                      fontWeight: 900,
+                      color: member.accent,
+                      opacity: 0.6,
+                      position: "relative",
+                      zIndex: 1,
+                    }}>
+                      {member.initials}
+                    </span>
                   </div>
-                  <h3 className="text-xl font-bold text-cream mb-1" style={{ fontFamily: "var(--font-playfair)" }}>Name Placeholder</h3>
-                  <p className="text-gold text-sm font-semibold tracking-wider mb-2" style={{ fontFamily: "var(--font-bebas)", letterSpacing: "0.1em" }}>Executive Producer</p>
-                  <p className="text-cream/40 text-sm leading-relaxed" style={{ fontFamily: "var(--font-space-grotesk)" }}>Bringing a decade of narrative journalism to Unscripted.</p>
-                </div>
-              </Reveal>
+
+                  {/* Name & title */}
+                  <p style={{ fontFamily: "var(--font-body)", fontSize: 20, fontWeight: 600, color: "#F8F5EE", marginBottom: 6 }}>
+                    {member.name}
+                  </p>
+                  <p style={{ fontFamily: "var(--font-bebas)", fontSize: 12, letterSpacing: "0.2em", color: member.accent, marginBottom: 20 }}>
+                    {member.title}
+                  </p>
+                  <div style={{ height: 1, background: "rgba(242,183,5,0.15)", width: 40, marginBottom: 20 }} />
+
+                  {/* Full bio */}
+                  {member.bio.split("\n\n").map((para, j) => (
+                    <p key={j} style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "rgba(248,245,238,0.60)", lineHeight: 1.75, marginBottom: 16 }}>
+                      {para}
+                    </p>
+                  ))}
+                </article>
+              </FadeUp>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="section-padding bg-ink border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 text-center">
-          <Reveal>
-            <div className="flex justify-center mb-8">
-              <ThreeBarMark size={48} />
-            </div>
-            <h2 className="text-4xl md:text-6xl font-bold text-cream mb-6" style={{ fontFamily: "var(--font-playfair)" }}>
-              Have a story worth telling?
-            </h2>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 px-10 py-5 bg-gold text-ink font-bold hover:bg-gold/90 transition-all duration-200 text-sm tracking-wide"
-              style={{ fontFamily: "var(--font-space-grotesk)" }}
-            >
-              Get in touch →
+      {/* ── CTA ── */}
+      <section style={{ background: "#0A0A0A", borderTop: "1px solid rgba(242,183,5,0.12)" }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "80px clamp(24px,6.25vw,80px)", textAlign: "center" }}>
+          <FadeUp>
+            <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(28px,3.5vw,48px)", fontWeight: 700, fontStyle: "italic", color: "#F8F5EE", marginBottom: 32 }}>
+              Ready to work together?
+            </p>
+            <Link href="/contact" className="btn-gold" style={{ borderRadius: 100 }}>
+              Let&apos;s talk →
             </Link>
-          </Reveal>
+          </FadeUp>
         </div>
       </section>
     </>
