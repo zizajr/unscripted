@@ -23,7 +23,7 @@ export default function Navigation({ dict, lang }: { dict: any; lang: string }) 
     { href: `/${lang}/about`,       label: dict.about },
     { href: `/${lang}/services`,    label: dict.services },
     { href: `/${lang}/work`,        label: dict.work },
-    { href: `/${lang}/main-street`, label: "MAIN STREET" },
+    { href: `/${lang}/main-street`, label: "Main Street" },
   ];
 
   const handleLangSwitch = (code: string) => {
@@ -108,14 +108,14 @@ export default function Navigation({ dict, lang }: { dict: any; lang: string }) 
               <Link
                 key={href}
                 href={href}
-                className={`text-sm font-medium tracking-wide transition-colors duration-200 ${
-                  label === "MAIN STREET"
+                className={`text-sm tracking-wide transition-colors duration-200 ${
+                  label === "Main Street"
                     ? "text-gold hover:text-gold/80"
                     : pathname.startsWith(href)
                     ? "text-gold"
                     : "text-cream/70 hover:text-cream"
                 }`}
-                style={{ fontFamily: "var(--font-space-grotesk)" }}
+                style={{ fontFamily: "var(--font-display)", fontStyle: "italic" }}
               >
                 {label}
               </Link>
@@ -151,7 +151,7 @@ export default function Navigation({ dict, lang }: { dict: any; lang: string }) 
             <Link
               href={`/${lang}/contact`}
               className="btn-gold text-sm px-6 py-2.5 rounded-full"
-              style={{ fontFamily: "var(--font-space-grotesk)" }}
+              style={{ fontFamily: "var(--font-display)", fontStyle: "italic" }}
             >
               {dict.startProject || "Start a Project"}
             </Link>
@@ -234,7 +234,7 @@ export default function Navigation({ dict, lang }: { dict: any; lang: string }) 
                   <Link
                     href={href}
                     className={`block py-3 border-b border-white/5 transition-colors duration-200 ${
-                      label === "MAIN STREET"
+                      label === "Main Street"
                         ? "text-gold"
                         : "text-cream hover:text-gold"
                     }`}
@@ -278,7 +278,7 @@ export default function Navigation({ dict, lang }: { dict: any; lang: string }) 
               <Link
                 href={`/${lang}/contact`}
                 className="btn-gold text-center rounded-full text-base"
-                style={{ fontFamily: "var(--font-space-grotesk)" }}
+                style={{ fontFamily: "var(--font-display)", fontStyle: "italic" }}
                 onClick={() => setOpen(false)}
               >
                 {dict.startProject || "Start a Project"}

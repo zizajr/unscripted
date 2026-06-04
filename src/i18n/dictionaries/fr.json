@@ -6,6 +6,15 @@
     "contact": "Contact",
     "startProject": "Démarrer un Projet"
   },
+  "home": {
+    "heroOverline": "IMAGE DE MARQUE · STRATÉGIE · COMMUNICATIONS",
+    "heroDefy": "Nous Défions",
+    "heroReason": "La Raison.",
+    "heroSubhead": "Nous sommes une agence de médias, d'image de marque et de communication conçue pour les marques qui croient en l'atteinte de l'extraordinaire. Nous ne suivons pas les tendances. Nous créons l'histoire.",
+    "startProject": "Démarrer un projet →",
+    "seeWork": "Voir Nos Réalisations",
+    "playSnake": "[ UTILISEZ LES FLÈCHES POUR JOUER ]"
+  },
   "footer": {
     "privacy": "Politique de confidentialité",
     "terms": "Conditions d'utilisation",

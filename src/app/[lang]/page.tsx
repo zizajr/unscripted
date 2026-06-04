@@ -20,10 +20,15 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HomePage() {
+import { getDictionary } from "@/i18n/getDictionary";
+
+export default async function HomePage({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params;
+  const dict = await getDictionary(lang as "en" | "fr" | "ar");
+
   return (
     <>
-      <HeroSection />
+      <HeroSection dict={dict.home} lang={lang} />
       <CredentialsTicker />
       <AboutSection />
       <HowWeWorkSection />

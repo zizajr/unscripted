@@ -7,7 +7,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
    Snake Game Constants
 ───────────────────────────────────────── */
 const CELL  = 20;   // px per cell
-const SPEED = 140;  // ms per tick (desktop)
+const SPEED = 300;  // ms per tick (slower for better playability)
 
 type Dir = "UP" | "DOWN" | "LEFT" | "RIGHT";
 type Pt  = { x: number; y: number };
@@ -22,7 +22,7 @@ function randomCell(cols: number, rows: number): Pt {
 /* ─────────────────────────────────────────
    Snake Canvas Component
 ───────────────────────────────────────── */
-function SnakeGame({ size }: { size: number }) {
+function SnakeGame({ size, dict }: { size: number, dict?: any }) {
   const canvasRef  = useRef<HTMLCanvasElement>(null);
   const stateRef   = useRef<{
     snake: Pt[];
@@ -219,7 +219,7 @@ function SnakeGame({ size }: { size: number }) {
           color: "rgba(242,183,5,0.5)",
         }}
       >
-        [ USE ARROW KEYS TO PLAY ]
+        {dict?.playSnake || "[ USE ARROW KEYS TO PLAY ]"}
       </div>
     </div>
   );
@@ -286,7 +286,7 @@ function ScrollIndicator() {
 /* ─────────────────────────────────────────
    Hero Section (main export)
 ───────────────────────────────────────── */
-export default function HeroSection() {
+export default function HeroSection({ dict, lang }: { dict?: any, lang?: string }) {
   const sectionRef   = useRef<HTMLElement>(null);
   const canvasWrapRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
@@ -372,7 +372,7 @@ export default function HeroSection() {
               color: "#F2B705",
             }}
           >
-            BRANDING · STRATEGY · COMMUNICATIONS
+            {dict?.heroOverline || "BRANDING · STRATEGY · COMMUNICATIONS"}
           </motion.p>
 
           {/* Headline */}
@@ -389,8 +389,8 @@ export default function HeroSection() {
               letterSpacing: "-0.02em",
             }}
           >
-            We Defy<br />
-            <em style={{ fontStyle: "italic" }}>Reason.</em>
+            {dict?.heroDefy || "We Defy"}<br />
+            <em style={{ fontStyle: "italic" }}>{dict?.heroReason || "Reason."}</em>
           </motion.h1>
 
           {/* Subhead */}
@@ -406,9 +406,7 @@ export default function HeroSection() {
               maxWidth: 560,
             }}
           >
-            We are a media, branding, and communications company built for
-            brands that believe in achieving the extraordinary. We don&apos;t
-            chase trends. We build the record.
+            {dict?.heroSubhead || "We are a media, branding, and communications company built for brands that believe in achieving the extraordinary. We don't chase trends. We build the record."}
           </motion.p>
 
           {/* CTAs */}
@@ -418,11 +416,11 @@ export default function HeroSection() {
             transition={{ duration: 0.7, delay: 0.3, ease: [0.21, 0.47, 0.32, 0.98] }}
             className="flex flex-wrap gap-4"
           >
-            <Link href="/contact" className="btn-gold rounded-full">
-              Start a Project →
+            <Link href={`/${lang}/contact`} className="btn-gold rounded-full">
+              {dict?.startProject || "Start a Project →"}
             </Link>
-            <Link href="/work" className="btn-outline-cream rounded-full">
-              See Our Work
+            <Link href={`/${lang}/work`} className="btn-outline-cream rounded-full">
+              {dict?.seeWork || "See Our Work"}
             </Link>
           </motion.div>
         </div>
@@ -439,7 +437,7 @@ export default function HeroSection() {
           {prefersReduced ? (
             <StaticFallback size={CANVAS_SIZE} />
           ) : (
-            <SnakeGame size={CANVAS_SIZE} />
+            <SnakeGame size={CANVAS_SIZE} dict={dict} />
           )}
         </motion.div>
       </div>

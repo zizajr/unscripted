@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Space_Grotesk, Bebas_Neue } from "next/font/google";
+import { Playfair_Display, Lora, Bebas_Neue } from "next/font/google";
 import "../globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -14,10 +14,11 @@ const playfair = Playfair_Display({
   display: "swap",
 });
 
-const spaceGrotesk = Space_Grotesk({
+const lora = Lora({
   subsets: ["latin"],
-  variable: "--font-space-grotesk",
-  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-lora",
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -94,7 +95,7 @@ export default async function RootLayout({
   return (
     <html lang={lang} dir={dir}>
       <body
-        className={`${playfair.variable} ${spaceGrotesk.variable} ${bebasNeue.variable}`}
+        className={`${playfair.variable} ${lora.variable} ${bebasNeue.variable}`}
       >
         <Navigation dict={dict.nav} lang={lang} />
         <main>{children}</main>

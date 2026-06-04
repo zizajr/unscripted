@@ -6,6 +6,15 @@
     "contact": "Contact",
     "startProject": "Start a Project"
   },
+  "home": {
+    "heroOverline": "BRANDING · STRATEGY · COMMUNICATIONS",
+    "heroDefy": "We Defy",
+    "heroReason": "Reason.",
+    "heroSubhead": "We are a media, branding, and communications company built for brands that believe in achieving the extraordinary. We don't chase trends. We build the record.",
+    "startProject": "Start a Project →",
+    "seeWork": "See Our Work",
+    "playSnake": "[ USE ARROW KEYS TO PLAY ]"
+  },
   "footer": {
     "privacy": "Privacy Policy",
     "terms": "Terms of Use",
