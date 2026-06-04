@@ -64,17 +64,10 @@ export default function MainStreetPage() {
           <p className="mt-4 text-base text-cream/60 max-w-2xl leading-relaxed" style={{ fontFamily: "var(--font-space-grotesk)" }}>
             MAIN STREET is a podcast about the people building the next chapter of business and technology — recorded on location in the cities where that work is actually happening. Not Wall Street. Not Silicon Valley. Main Street.
           </p>
-          <div className="mt-10 flex flex-wrap gap-3">
-            {["Listen on Spotify", "Apple Podcasts", "YouTube"].map((cta) => (
-              <a
-                key={cta}
-                href="#listen"
-                className="px-5 py-3 border border-white/15 text-cream/70 text-sm hover:border-gold hover:text-gold transition-all duration-200"
-                style={{ fontFamily: "var(--font-space-grotesk)" }}
-              >
-                {cta}
-              </a>
-            ))}
+          <div className="mt-10">
+            <span className="inline-block px-6 py-4 bg-gold text-ink font-semibold text-sm cursor-default" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+              Coming Soon on Apple Podcasts
+            </span>
           </div>
         </div>
       </section>
@@ -165,11 +158,9 @@ export default function MainStreetPage() {
                       </span>
                       <span className="text-cream/30 text-xs" style={{ fontFamily: "var(--font-space-grotesk)" }}>{ep.duration}</span>
                       <div className="flex gap-2">
-                        {["Play", "Spotify", "Apple"].map((p) => (
-                          <a key={p} href="#" className="text-xs text-cream/30 border border-white/10 px-3 py-1.5 hover:border-gold/40 hover:text-gold transition-all" style={{ fontFamily: "var(--font-space-grotesk)" }}>
-                            {p}
-                          </a>
-                        ))}
+                        <span className="text-xs text-cream/40 px-3 py-1.5 border border-white/5 bg-white/2" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+                          Coming Soon
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -189,18 +180,15 @@ export default function MainStreetPage() {
               Find MAIN STREET on your platform.
             </h2>
           </Reveal>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {platforms.map((p, i) => (
-              <Reveal key={p.name} delay={i * 0.05}>
-                <a
-                  href={p.href}
-                  className="flex items-center justify-center p-6 border border-white/8 text-center text-sm text-cream/60 hover:border-gold/40 hover:text-gold transition-all duration-200 h-20"
-                  style={{ fontFamily: "var(--font-space-grotesk)" }}
-                >
-                  {p.name}
-                </a>
-              </Reveal>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl">
+            <Reveal>
+              <div
+                className="flex items-center justify-center p-6 border border-gold/20 text-center text-sm text-gold h-20 bg-gold/5"
+                style={{ fontFamily: "var(--font-space-grotesk)" }}
+              >
+                Apple Podcasts (Coming Soon)
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>

@@ -62,7 +62,7 @@ export default function AboutSection() {
             fontFamily: "var(--font-display)",
             fontSize: "clamp(36px, 4.5vw, 56px)",
             fontWeight: 900,
-            fontStyle: "italic",
+            fontStyle: "normal",
             color: "#0A0A0A",
             lineHeight: 1.1,
             maxWidth: 900,

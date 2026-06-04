@@ -13,7 +13,7 @@ const work = [
   {
     client: "HamzPay / Hamz Ltd",
     type: "Brand & FinTech",
-    outcome: "Mobile wallet identity and communications for Rwandan consumers.",
+    outcome: "Mobile wallet identity and communications for Ugandan consumers.",
     color: "#16213e",
   },
   {
@@ -221,26 +221,69 @@ export default function WorkSection() {
           ))}
         </div>
 
-        {/* CTA */}
+        {/* Split CTA */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.6, delay: 0.7 }}
-          style={{ textAlign: "center" }}
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.6, ease: [0.21, 0.47, 0.32, 0.98] }}
+          className="border-t border-black/10 pt-16 mt-16"
         >
-          <p
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "17px",
-              color: "#3D3D3D",
-              marginBottom: "16px",
-            }}
-          >
-            Interested in working with us?
-          </p>
-          <Link href="/contact" className="btn-gold rounded-full">
-            Start a Project →
-          </Link>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            {/* Left Column */}
+            <div>
+              <p
+                style={{
+                  fontFamily: "var(--font-bebas)",
+                  fontSize: 12,
+                  letterSpacing: "0.35em",
+                  color: "#F2B705",
+                  marginBottom: 12,
+                }}
+              >
+                INTERESTED IN WORKING WITH US?
+              </p>
+              <h3
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(28px, 3.5vw, 48px)",
+                  fontWeight: 900,
+                  color: "#0A0A0A",
+                  lineHeight: 1.1,
+                }}
+              >
+                Let&apos;s build something new.
+              </h3>
+            </div>
+
+            {/* Right Column */}
+            <div className="flex lg:justify-end">
+              <Link
+                href="/contact"
+                className="group relative overflow-hidden flex items-center justify-between p-6 md:p-8 w-full lg:max-w-md border border-black/10 hover:border-gold bg-black/5 hover:bg-gold/5 transition-all duration-300"
+              >
+                <div>
+                  <span
+                    className="block text-xs font-bold tracking-widest text-black/40 group-hover:text-gold transition-colors uppercase mb-1"
+                    style={{ fontFamily: "var(--font-bebas)", letterSpacing: "0.15em" }}
+                  >
+                    Start a Project
+                  </span>
+                  <span
+                    className="block text-lg font-bold text-black"
+                    style={{ fontFamily: "var(--font-body)" }}
+                  >
+                    Get in touch with us
+                  </span>
+                </div>
+                <div
+                  className="w-10 h-10 rounded-full border border-black/20 group-hover:border-gold group-hover:bg-gold flex items-center justify-center text-black transition-all duration-300"
+                  aria-hidden="true"
+                >
+                  <span className="text-lg group-hover:translate-x-1 transition-transform">→</span>
+                </div>
+              </Link>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>

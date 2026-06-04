@@ -186,7 +186,7 @@ export default function ServicesSection() {
           }}
         >
           Architects of strategy.<br />
-          <em>Storytellers with purpose.</em>
+          <span style={{ color: "#F2B705", fontStyle: "normal" }}>Storytellers with purpose.</span>
         </motion.h2>
 
         {/* Intro body — original from brief */}

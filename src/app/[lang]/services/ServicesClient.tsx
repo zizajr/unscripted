@@ -170,7 +170,7 @@ export default function ServicesClient() {
             initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
             style={{ fontFamily: "var(--font-display)", fontSize: "clamp(40px,6vw,80px)", fontWeight: 900, color: "#F8F5EE", lineHeight: 1.0, marginBottom: 32 }}>
             Architects of Strategy.<br />
-            <em>Storytellers with Purpose.</em>
+            <span style={{ color: "#F2B705", fontStyle: "normal" }}>Storytellers with Purpose.</span>
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }}
             style={{ fontFamily: "var(--font-body)", fontSize: "clamp(16px,1.5vw,20px)", color: "rgba(248,245,238,0.65)", maxWidth: 640, lineHeight: 1.7 }}>
@@ -193,17 +193,73 @@ export default function ServicesClient() {
         </div>
       </section>
 
-      {/* ── CTA ── */}
-      <section style={{ background: "#1C1C2E", borderTop: "3px solid #F2B705" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "80px clamp(24px,6.25vw,80px)", textAlign: "center" }}>
-          <FadeUp>
-            <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(28px,4vw,52px)", fontWeight: 900, color: "#F8F5EE", marginBottom: 32 }}>
-              Ready to get started?
-            </p>
-            <Link href="/contact" className="btn-gold" style={{ borderRadius: 100 }}>
-              Start a Project →
-            </Link>
-          </FadeUp>
+      {/* ── SPLIT CTA ── */}
+      <section style={{ background: "#0A0A0A", borderTop: "1px solid rgba(248,245,238,0.1)" }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "100px clamp(24px, 6.25vw, 80px)" }}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left Column */}
+            <div>
+              <p
+                style={{
+                  fontFamily: "var(--font-bebas)",
+                  fontSize: 12,
+                  letterSpacing: "0.35em",
+                  color: "#F2B705",
+                  marginBottom: 16,
+                }}
+              >
+                HAVE A PROJECT?
+              </p>
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(36px, 4vw, 56px)",
+                  fontWeight: 900,
+                  color: "#F8F5EE",
+                  lineHeight: 1.1,
+                  marginBottom: 24,
+                }}
+              >
+                Let&apos;s build something<br />exceptional together.
+              </h2>
+              <a
+                href="mailto:hello@theunscripted.xyz"
+                className="text-lg md:text-xl font-medium text-cream/60 hover:text-gold transition-colors duration-200"
+                style={{ fontFamily: "var(--font-body)" }}
+              >
+                hello@theunscripted.xyz
+              </a>
+            </div>
+
+            {/* Right Column */}
+            <div className="flex lg:justify-end">
+              <Link
+                href="/contact"
+                className="group relative overflow-hidden flex items-center justify-between p-8 md:p-12 w-full lg:max-w-md border border-white/10 hover:border-gold/30 bg-white/2 hover:bg-gold/5 transition-all duration-300"
+              >
+                <div className="z-10">
+                  <span
+                    className="block text-xs font-bold tracking-widest text-cream/40 group-hover:text-gold/80 transition-colors uppercase mb-2"
+                    style={{ fontFamily: "var(--font-bebas)", letterSpacing: "0.15em" }}
+                  >
+                    Start a Project
+                  </span>
+                  <span
+                    className="block text-xl md:text-2xl font-bold text-cream"
+                    style={{ fontFamily: "var(--font-body)" }}
+                  >
+                    Get in touch with us
+                  </span>
+                </div>
+                <div
+                  className="w-12 h-12 rounded-full border border-white/20 group-hover:border-gold group-hover:bg-gold flex items-center justify-center text-cream group-hover:text-ink transition-all duration-300"
+                  aria-hidden="true"
+                >
+                  <span className="text-xl group-hover:translate-x-1 transition-transform">→</span>
+                </div>
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
     </>

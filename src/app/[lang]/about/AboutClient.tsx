@@ -160,85 +160,184 @@ export default function AboutClient() {
             </h2>
           </FadeUp>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-            {team.map((member, i) => (
-              <FadeUp key={member.name} delay={i * 0.12}>
-                <article style={{ display: "flex", flexDirection: "column", gap: 0 }}>
-                  {/* Photo block */}
-                  <div style={{
-                    width: "100%",
-                    aspectRatio: "4/3",
-                    background: "#1C1C2E",
-                    borderTop: `3px solid ${member.accent}`,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    position: "relative",
-                    overflow: "hidden",
-                    marginBottom: 28,
-                  }}>
-                    {member.image ? (
-                      <Image
-                        src={member.image}
-                        alt={`Photo of ${member.name}`}
-                        fill
-                        className="object-cover object-top grayscale hover:grayscale-0 transition-all duration-500"
-                        sizes="(max-width: 1024px) 100vw, 50vw"
-                      />
-                    ) : (
-                      <>
-                        <div aria-hidden="true" style={{
-                          position: "absolute", inset: 0,
-                          background: `radial-gradient(ellipse at bottom right, ${member.accent}18 0%, transparent 70%)`,
-                        }} />
-                        <span style={{
-                          fontFamily: "var(--font-display)",
-                          fontSize: "clamp(48px,8vw,80px)",
-                          fontWeight: 900,
+          <div className="flex flex-col gap-24 md:gap-32">
+            {team.map((member, i) => {
+              const isEven = i % 2 === 0;
+              const numStr = String(i + 1).padStart(2, "0") + "/";
+              const textColor = member.accent === "#F2B705" ? "#0A0A0A" : "#F8F5EE";
+              return (
+                <FadeUp key={member.name} delay={i * 0.1}>
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center border-b border-white/5 pb-20 last:border-b-0 last:pb-0">
+                    {/* Text Column */}
+                    <div className={`col-span-1 lg:col-span-7 ${isEven ? "lg:order-1" : "lg:order-2"}`}>
+                      {/* Large Number */}
+                      <div
+                        className="text-6xl md:text-8xl font-black mb-6 tracking-tighter"
+                        style={{
+                          fontFamily: "var(--font-bebas)",
+                          color: "rgba(248, 245, 238, 0.08)",
+                          lineHeight: 1,
+                        }}
+                      >
+                        {numStr}
+                      </div>
+
+                      {/* Name Header Block */}
+                      <div className="inline-block px-6 py-3 mb-6" style={{ backgroundColor: member.accent }}>
+                        <h3
+                          className="text-2xl md:text-3xl font-black tracking-tight"
+                          style={{
+                            fontFamily: "var(--font-body)",
+                            color: textColor,
+                            margin: 0,
+                          }}
+                        >
+                          {member.name}
+                        </h3>
+                      </div>
+
+                      {/* Title */}
+                      <h4
+                        className="text-sm font-bold tracking-widest uppercase mb-6"
+                        style={{
+                          fontFamily: "var(--font-bebas)",
                           color: member.accent,
-                          opacity: 0.6,
-                          position: "relative",
-                          zIndex: 1,
-                        }}>
-                          {member.initials}
-                        </span>
-                      </>
-                    )}
+                          letterSpacing: "0.2em",
+                        }}
+                      >
+                        {member.title}
+                      </h4>
+
+                      {/* Bio */}
+                      <div className="space-y-4">
+                        {member.bio.split("\n\n").map((para, j) => (
+                          <p
+                            key={j}
+                            className="text-base leading-relaxed text-cream/70"
+                            style={{ fontFamily: "var(--font-body)" }}
+                          >
+                            {para}
+                          </p>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Image Column */}
+                    <div className={`col-span-1 lg:col-span-5 ${isEven ? "lg:order-2" : "lg:order-1"}`}>
+                      <div
+                        className="w-full relative overflow-hidden group border border-white/5"
+                        style={{
+                          aspectRatio: "3/4",
+                          background: "#1C1C2E",
+                          borderTop: `4px solid ${member.accent}`,
+                        }}
+                      >
+                        {member.image ? (
+                          <Image
+                            src={member.image}
+                            alt={`Photo of ${member.name}`}
+                            fill
+                            className="object-cover object-top grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out"
+                            sizes="(max-width: 1024px) 100vw, 40vw"
+                          />
+                        ) : (
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div
+                              className="absolute inset-0 opacity-20"
+                              style={{
+                                background: `radial-gradient(circle at center, ${member.accent} 0%, transparent 70%)`,
+                              }}
+                            />
+                            <span
+                              className="font-bold tracking-tighter"
+                              style={{
+                                fontFamily: "var(--font-bebas)",
+                                fontSize: "clamp(80px, 12vw, 160px)",
+                                color: member.accent,
+                                opacity: 0.25,
+                              }}
+                            >
+                              {member.initials}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   </div>
-
-                  {/* Name & title */}
-                  <p style={{ fontFamily: "var(--font-body)", fontSize: 20, fontWeight: 600, color: "#F8F5EE", marginBottom: 6 }}>
-                    {member.name}
-                  </p>
-                  <p style={{ fontFamily: "var(--font-bebas)", fontSize: 12, letterSpacing: "0.2em", color: member.accent, marginBottom: 20 }}>
-                    {member.title}
-                  </p>
-                  <div style={{ height: 1, background: "rgba(242,183,5,0.15)", width: 40, marginBottom: 20 }} />
-
-                  {/* Full bio */}
-                  {member.bio.split("\n\n").map((para, j) => (
-                    <p key={j} style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "rgba(248,245,238,0.60)", lineHeight: 1.75, marginBottom: 16 }}>
-                      {para}
-                    </p>
-                  ))}
-                </article>
-              </FadeUp>
-            ))}
+                </FadeUp>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* ── CTA ── */}
-      <section style={{ background: "#0A0A0A", borderTop: "1px solid rgba(242,183,5,0.12)" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "80px clamp(24px,6.25vw,80px)", textAlign: "center" }}>
-          <FadeUp>
-            <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(28px,3.5vw,48px)", fontWeight: 700, fontStyle: "italic", color: "#F8F5EE", marginBottom: 32 }}>
-              Ready to work together?
-            </p>
-            <Link href="/contact" className="btn-gold" style={{ borderRadius: 100 }}>
-              Let&apos;s talk →
-            </Link>
-          </FadeUp>
+      {/* ── SPLIT CTA ── */}
+      <section style={{ background: "#0A0A0A", borderTop: "1px solid rgba(248,245,238,0.1)" }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "100px clamp(24px, 6.25vw, 80px)" }}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left Column */}
+            <div>
+              <p
+                style={{
+                  fontFamily: "var(--font-bebas)",
+                  fontSize: 12,
+                  letterSpacing: "0.35em",
+                  color: "#F2B705",
+                  marginBottom: 16,
+                }}
+              >
+                HAVE A PROJECT?
+              </p>
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(36px, 4vw, 56px)",
+                  fontWeight: 900,
+                  color: "#F8F5EE",
+                  lineHeight: 1.1,
+                  marginBottom: 24,
+                }}
+              >
+                Let&apos;s build something<br />exceptional together.
+              </h2>
+              <a
+                href="mailto:hello@theunscripted.xyz"
+                className="text-lg md:text-xl font-medium text-cream/60 hover:text-gold transition-colors duration-200"
+                style={{ fontFamily: "var(--font-body)" }}
+              >
+                hello@theunscripted.xyz
+              </a>
+            </div>
+
+            {/* Right Column */}
+            <div className="flex lg:justify-end">
+              <Link
+                href="/contact"
+                className="group relative overflow-hidden flex items-center justify-between p-8 md:p-12 w-full lg:max-w-md border border-white/10 hover:border-gold/30 bg-white/2 hover:bg-gold/5 transition-all duration-300"
+              >
+                <div className="z-10">
+                  <span
+                    className="block text-xs font-bold tracking-widest text-cream/40 group-hover:text-gold/80 transition-colors uppercase mb-2"
+                    style={{ fontFamily: "var(--font-bebas)", letterSpacing: "0.15em" }}
+                  >
+                    Start a Project
+                  </span>
+                  <span
+                    className="block text-xl md:text-2xl font-bold text-cream"
+                    style={{ fontFamily: "var(--font-body)" }}
+                  >
+                    Get in touch with us
+                  </span>
+                </div>
+                <div
+                  className="w-12 h-12 rounded-full border border-white/20 group-hover:border-gold group-hover:bg-gold flex items-center justify-center text-cream group-hover:text-ink transition-all duration-300"
+                  aria-hidden="true"
+                >
+                  <span className="text-xl group-hover:translate-x-1 transition-transform">→</span>
+                </div>
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
     </>

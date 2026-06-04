@@ -26,7 +26,7 @@ const projects = [
   {
     client: "HamzPay",
     type: "Brand & FinTech",
-    outcome: "Mobile wallet identity and communications for Rwandan consumers.",
+    outcome: "Mobile wallet identity and communications for Ugandan consumers.",
     bg: "radial-gradient(circle at bottom left, #0d1b2a, #0A0A0A)",
   },
   {

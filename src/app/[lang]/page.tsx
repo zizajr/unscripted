@@ -6,6 +6,7 @@ import HowWeWorkSection from "@/components/home/HowWeWorkSection";
 import ServicesSection  from "@/components/home/ServicesSection";
 import MainStreetSection from "@/components/home/MainStreetSection";
 import WorkSection      from "@/components/home/WorkSection";
+import TractionSection  from "@/components/home/TractionSection";
 import TeamSection      from "@/components/home/TeamSection";
 import ContactSection   from "@/components/home/ContactSection";
 
@@ -35,6 +36,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
       <ServicesSection />
       <MainStreetSection />
       <WorkSection />
+      <TractionSection />
       <TeamSection />
       <ContactSection />
     </>

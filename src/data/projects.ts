@@ -23,7 +23,7 @@ export const projects: Project[] = [
     client: "HamzPay / Hamz Ltd",
     type: "Brand & FinTech",
     category: "Branding",
-    outcome: "Mobile wallet identity and communications for Rwandan consumers.",
+    outcome: "Mobile wallet identity and communications for Ugandan consumers.",
     color: "#1a1a2e",
   },
   {

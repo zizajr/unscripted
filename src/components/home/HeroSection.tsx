@@ -12,6 +12,17 @@ const SPEED = 300;  // ms per tick (slower for better playability)
 type Dir = "UP" | "DOWN" | "LEFT" | "RIGHT";
 type Pt  = { x: number; y: number };
 
+type Particle = {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  color: string;
+  size: number;
+  alpha: number;
+  decay: number;
+};
+
 function randomCell(cols: number, rows: number): Pt {
   return {
     x: Math.floor(Math.random() * cols),
@@ -34,6 +45,7 @@ function SnakeGame({ size, dict }: { size: number, dict?: any }) {
     timer: ReturnType<typeof setTimeout> | null;
     glowTimer: ReturnType<typeof setTimeout> | null;
     glowing: boolean;
+    particles: Particle[];
   }>({
     snake:     [{ x: 5, y: 5 }],
     dir:       "RIGHT",
@@ -44,6 +56,7 @@ function SnakeGame({ size, dict }: { size: number, dict?: any }) {
     timer:     null,
     glowTimer: null,
     glowing:   false,
+    particles: [],
   });
   const labelRef = useRef<HTMLDivElement>(null);
 
@@ -78,15 +91,17 @@ function SnakeGame({ size, dict }: { size: number, dict?: any }) {
     ctx.arc(fc.x * CELL + CELL / 2, fc.y * CELL + CELL / 2, 4, 0, Math.PI * 2);
     ctx.fill();
 
-    // Snake (Gold segments)
-    s.snake.forEach((seg, i) => {
-      const alpha = i === 0 ? 1 : Math.max(0.5, 1 - i * 0.04);
-      ctx.fillStyle = i === 0 ? "#F2B705" : `rgba(242,183,5,${alpha})`;
-      const pad = i === 0 ? 1 : 2;
-      const r   = i === 0 ? 4 : 3;
-      roundRect(ctx, seg.x * CELL + pad, seg.y * CELL + pad, CELL - pad * 2, CELL - pad * 2, r);
-      ctx.fill();
-    });
+    // Snake (Gold segments) - only draw if alive
+    if (s.alive) {
+      s.snake.forEach((seg, i) => {
+        const alpha = i === 0 ? 1 : Math.max(0.5, 1 - i * 0.04);
+        ctx.fillStyle = i === 0 ? "#F2B705" : `rgba(242,183,5,${alpha})`;
+        const pad = i === 0 ? 1 : 2;
+        const r   = i === 0 ? 4 : 3;
+        roundRect(ctx, seg.x * CELL + pad, seg.y * CELL + pad, CELL - pad * 2, CELL - pad * 2, r);
+        ctx.fill();
+      });
+    }
 
     // Glow border
     if (s.glowing) {
@@ -104,6 +119,70 @@ function SnakeGame({ size, dict }: { size: number, dict?: any }) {
     s.food = f;
   }, [cols, rows]);
 
+  const spawnExplosion = useCallback((x: number, y: number) => {
+    const s = stateRef.current;
+    s.particles = [];
+    const colors = ["#F2B705", "#F8F5EE", "rgba(242,183,5,0.8)", "#FFFFFF", "#8B2FC9"];
+    for (let i = 0; i < 30; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 1.5 + Math.random() * 5;
+      s.particles.push({
+        x: x * CELL + CELL / 2,
+        y: y * CELL + CELL / 2,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        size: 2 + Math.random() * 3,
+        alpha: 1,
+        decay: 0.015 + Math.random() * 0.02,
+      });
+    }
+  }, []);
+
+  const animateExplosion = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    const s = stateRef.current;
+
+    // Redraw background & grid
+    ctx.fillStyle = "#0A0A0A";
+    ctx.fillRect(0, 0, size, size);
+
+    ctx.fillStyle = "rgba(255,255,255,0.03)";
+    for (let c = 0; c < cols; c++) {
+      for (let r = 0; r < rows; r++) {
+        ctx.beginPath();
+        ctx.arc(c * CELL + CELL / 2, r * CELL + CELL / 2, 1, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    // Draw active particles
+    s.particles.forEach((p) => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.08; // gravity
+      p.alpha -= p.decay;
+
+      if (p.alpha > 0) {
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.alpha;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    });
+    ctx.globalAlpha = 1.0;
+
+    s.particles = s.particles.filter(p => p.alpha > 0);
+
+    if (s.particles.length > 0) {
+      requestAnimationFrame(animateExplosion);
+    }
+  }, [size, cols, rows]);
+
   const tick = useCallback(() => {
     const s = stateRef.current;
     if (!s.alive || s.paused) return;
@@ -111,28 +190,40 @@ function SnakeGame({ size, dict }: { size: number, dict?: any }) {
     s.dir = s.nextDir;
     const head = s.snake[0];
     const next: Pt = {
-      x: (head.x + (s.dir === "RIGHT" ? 1 : s.dir === "LEFT" ? -1 : 0) + cols) % cols,
-      y: (head.y + (s.dir === "DOWN"  ? 1 : s.dir === "UP"   ? -1 : 0) + rows) % rows,
+      x: head.x + (s.dir === "RIGHT" ? 1 : s.dir === "LEFT" ? -1 : 0),
+      y: head.y + (s.dir === "DOWN"  ? 1 : s.dir === "UP"   ? -1 : 0),
     };
 
-    // Collision with self
-    if (s.snake.slice(1).some(p => p.x === next.x && p.y === next.y)) {
+    // Border collision or self collision
+    const hitWall = next.x < 0 || next.x >= cols || next.y < 0 || next.y >= rows;
+    const hitSelf = s.snake.slice(1).some(p => p.x === next.x && p.y === next.y);
+
+    if (hitWall || hitSelf) {
       s.alive = false;
       draw();
-      // Fade, reset after 2s
-          if (canvasRef.current) {
-          canvasRef.current.style.opacity = "0.2";
-          setTimeout(() => {
-            if (canvasRef.current) canvasRef.current.style.opacity = "1";
-            s.snake   = [{ x: 5, y: 5 }];
-            s.dir     = "RIGHT";
-            s.nextDir = "RIGHT";
-            s.alive   = true;
-            spawnFood();
-            if (s.timer != null) clearTimeout(s.timer);
-            s.timer = setTimeout(tick, SPEED);
-          }, 2000);
-        }
+      if (s.timer != null) clearTimeout(s.timer);
+
+      // Trigger explosion at head's location (clamped to border if wall hit)
+      const explosionX = Math.max(0, Math.min(cols - 1, next.x));
+      const explosionY = Math.max(0, Math.min(rows - 1, next.y));
+      spawnExplosion(explosionX, explosionY);
+      animateExplosion();
+
+      if (canvasRef.current) {
+        canvasRef.current.style.opacity = "0.4";
+        setTimeout(() => {
+          if (canvasRef.current) canvasRef.current.style.opacity = "1";
+          s.snake   = [{ x: Math.floor(cols / 3), y: Math.floor(rows / 2) }];
+          s.dir     = "RIGHT";
+          s.nextDir = "RIGHT";
+          s.alive   = true;
+          spawnFood();
+          if (s.timer != null) clearTimeout(s.timer);
+          s.timer = setTimeout(tick, SPEED);
+          if (labelRef.current) labelRef.current.textContent = dict?.playSnake || "[ USE ARROW KEYS TO PLAY ]";
+        }, 2000);
+      }
+      if (labelRef.current) labelRef.current.textContent = "[ GAME OVER ]";
       return;
     }
 
@@ -151,15 +242,17 @@ function SnakeGame({ size, dict }: { size: number, dict?: any }) {
 
     draw();
     s.timer = setTimeout(tick, SPEED);
-  }, [cols, rows, draw, spawnFood]);
+  }, [cols, rows, draw, spawnFood, spawnExplosion, animateExplosion, dict]);
 
   useEffect(() => {
     const s    = stateRef.current;
+    (window as any).__snakeState = s; // Assign to window so scroll logic can access it
     s.snake    = [{ x: Math.floor(cols / 3), y: Math.floor(rows / 2) }];
     s.dir      = "RIGHT";
     s.nextDir  = "RIGHT";
     s.alive    = true;
     s.paused   = false;
+    s.particles = [];
     spawnFood();
     draw();
     s.timer = setTimeout(tick, SPEED);
@@ -191,6 +284,7 @@ function SnakeGame({ size, dict }: { size: number, dict?: any }) {
       window.removeEventListener("keydown", onKey);
       window.removeEventListener("blur",    onBlur);
       window.removeEventListener("focus",   onFocus);
+      delete (window as any).__snakeState;
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

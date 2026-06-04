@@ -98,10 +98,9 @@ export default function MainStreetClient() {
 
           {/* CTA */}
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.55 }}>
-            <Link href="https://open.spotify.com" target="_blank" rel="noopener noreferrer"
-              className="btn-gold" style={{ borderRadius: 100 }}>
-              Listen Now →
-            </Link>
+            <span className="btn-gold cursor-default" style={{ borderRadius: 100, display: "inline-block" }}>
+              Coming Soon on Apple Podcasts
+            </span>
           </motion.div>
         </div>
       </section>
@@ -195,14 +194,9 @@ export default function MainStreetClient() {
               Tune in. The conversation<br /><em style={{ color: "#F2B705", fontStyle: "italic" }}>starts now.</em>
             </h2>
             <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-              <Link href="https://open.spotify.com" target="_blank" rel="noopener noreferrer"
-                className="btn-gold" style={{ borderRadius: 100 }}>
-                Listen on Spotify →
-              </Link>
-              <Link href="https://podcasts.apple.com" target="_blank" rel="noopener noreferrer"
-                className="btn-outline-cream" style={{ borderRadius: 100 }}>
-                Apple Podcasts
-              </Link>
+              <span className="btn-gold cursor-default" style={{ borderRadius: 100, display: "inline-block" }}>
+                Coming Soon on Apple Podcasts
+              </span>
             </div>
           </FadeUp>
         </div>
