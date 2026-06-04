@@ -213,7 +213,7 @@ export default function ServicesClient() {
               <h2
                 style={{
                   fontFamily: "var(--font-display)",
-                  fontSize: "clamp(36px, 4vw, 56px)",
+                  fontSize: "clamp(44px, 5vw, 68px)",
                   fontWeight: 900,
                   color: "#F8F5EE",
                   lineHeight: 1.1,

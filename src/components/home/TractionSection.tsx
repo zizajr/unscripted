@@ -14,7 +14,7 @@ const stats = [
   {
     value: "4",
     label: "FLAGSHIP CITY EDITIONS",
-    desc: "Actively reporting business and investment stories from Kigali, Doha, Nairobi, and Lagos.",
+    desc: "Telling business and investment stories from Kigali, Doha, and Nairobi.",
     accent: "#8B2FC9",
   },
   {

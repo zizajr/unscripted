@@ -245,7 +245,7 @@ export default function WorkSection() {
               <h3
                 style={{
                   fontFamily: "var(--font-display)",
-                  fontSize: "clamp(28px, 3.5vw, 48px)",
+                  fontSize: "clamp(36px, 4.5vw, 60px)",
                   fontWeight: 900,
                   color: "#0A0A0A",
                   lineHeight: 1.1,

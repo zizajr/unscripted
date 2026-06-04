@@ -259,13 +259,36 @@ function SnakeGame({ size, dict }: { size: number, dict?: any }) {
 
     // Keyboard input
     const onKey = (e: KeyboardEvent) => {
+      const keysToPrevent = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " ", "Spacebar"];
+      if (keysToPrevent.includes(e.key)) {
+        e.preventDefault(); // Stop window scroll when playing
+      }
+
       const { nextDir: d } = s;
+      if (!s.alive) {
+        if (e.key === " " || e.key === "Spacebar") {
+          // Restart immediately on Space!
+          s.snake   = [{ x: Math.floor(cols / 3), y: Math.floor(rows / 2) }];
+          s.dir     = "RIGHT";
+          s.nextDir = "RIGHT";
+          s.alive   = true;
+          s.paused  = false;
+          s.particles = [];
+          spawnFood();
+          if (s.timer != null) clearTimeout(s.timer);
+          s.timer = setTimeout(tick, SPEED);
+          if (labelRef.current) labelRef.current.textContent = dict?.playSnake || "[ USE ARROW KEYS TO PLAY ]";
+          draw();
+        }
+        return;
+      }
+
       if ((e.key === "ArrowUp"    || e.key === "w") && d !== "DOWN")  s.nextDir = "UP";
       if ((e.key === "ArrowDown"  || e.key === "s") && d !== "UP")    s.nextDir = "DOWN";
       if ((e.key === "ArrowLeft"  || e.key === "a") && d !== "RIGHT") s.nextDir = "LEFT";
       if ((e.key === "ArrowRight" || e.key === "d") && d !== "LEFT")  s.nextDir = "RIGHT";
     };
-    window.addEventListener("keydown", onKey);
+    window.addEventListener("keydown", onKey, { passive: false });
 
     // Pause on tab blur
     const onBlur  = () => { s.paused = true; };
@@ -278,19 +301,57 @@ function SnakeGame({ size, dict }: { size: number, dict?: any }) {
     window.addEventListener("blur",  onBlur);
     window.addEventListener("focus", onFocus);
 
+    // Re-trigger tick loop on scroll back to top
+    const onScroll = () => {
+      const isPausedNow = window.scrollY > 200;
+      if (s.paused !== isPausedNow) {
+        s.paused = isPausedNow;
+        if (!isPausedNow && s.alive) {
+          if (s.timer != null) clearTimeout(s.timer);
+          s.timer = setTimeout(tick, SPEED);
+          if (labelRef.current) labelRef.current.textContent = dict?.playSnake || "[ USE ARROW KEYS TO PLAY ]";
+        }
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+
     return () => {
       if (s.timer != null) clearTimeout(s.timer);
       if (s.glowTimer != null) clearTimeout(s.glowTimer);
       window.removeEventListener("keydown", onKey);
       window.removeEventListener("blur",    onBlur);
       window.removeEventListener("focus",   onFocus);
+      window.removeEventListener("scroll",  onScroll);
       delete (window as any).__snakeState;
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [cols, rows, draw, spawnFood, tick, dict]);
+
+  const onMouseEnter = () => {
+    const s = stateRef.current;
+    if (s.paused && s.alive) {
+      s.paused = false;
+      if (s.timer != null) clearTimeout(s.timer);
+      s.timer = setTimeout(tick, SPEED);
+      if (labelRef.current) labelRef.current.textContent = "[ PLAYING ]";
+    }
+  };
+
+  const onMouseLeave = () => {
+    const s = stateRef.current;
+    if (!s.paused && s.alive) {
+      s.paused = true;
+      if (s.timer != null) clearTimeout(s.timer);
+      if (labelRef.current) labelRef.current.textContent = "[ HOVER TO RESUME ]";
+    }
+  };
 
   return (
-    <div className="relative flex flex-col items-center gap-3">
+    <div
+      className="relative flex flex-col items-center gap-3"
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       <canvas
         ref={canvasRef}
         width={size}
@@ -301,7 +362,7 @@ function SnakeGame({ size, dict }: { size: number, dict?: any }) {
           background: "#0A0A0A",
           display: "block",
         }}
-        aria-label="Decorative snake game"
+        aria-label="Interactive snake game"
         role="img"
       />
       <div
@@ -313,7 +374,7 @@ function SnakeGame({ size, dict }: { size: number, dict?: any }) {
           color: "rgba(242,183,5,0.5)",
         }}
       >
-        {dict?.playSnake || "[ USE ARROW KEYS TO PLAY ]"}
+        {dict?.playSnake || "[ USE ARROW KEYS TO PLAY / PRESS SPACE TO RESTART ]"}
       </div>
     </div>
   );
