@@ -150,7 +150,7 @@ export default function Navigation({ dict, lang }: { dict: any; lang: string }) 
             {/* CTA */}
             <Link
               href={`/${lang}/contact`}
-              className="btn-gold text-sm px-6 py-2.5 rounded-full"
+              className="btn-gold rounded-full"
               style={{ fontFamily: "var(--font-display)", fontStyle: "italic" }}
             >
               {dict.startProject || "Start a Project"}
@@ -277,7 +277,7 @@ export default function Navigation({ dict, lang }: { dict: any; lang: string }) 
 
               <Link
                 href={`/${lang}/contact`}
-                className="btn-gold text-center rounded-full text-base"
+                className="btn-gold rounded-full flex justify-center items-center w-full"
                 style={{ fontFamily: "var(--font-display)", fontStyle: "italic" }}
                 onClick={() => setOpen(false)}
               >

@@ -138,7 +138,7 @@ export default function WorkClient() {
             Ready to challenge <br />
             <span className="text-gold">the expected?</span>
           </p>
-          <Link href="/contact" className="inline-block bg-gold text-ink font-body font-semibold px-10 py-5 rounded-full hover:bg-cream transition-colors duration-300">
+          <Link href="/contact" className="btn-gold rounded-full">
             Start a Conversation →
           </Link>
         </FadeUp>

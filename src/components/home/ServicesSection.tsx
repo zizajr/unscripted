@@ -27,7 +27,7 @@ const services = [
   { num: "17", name: "CSR Implementation",            desc: "Meaningful CSR initiatives aligned with your brand values." },
 ];
 
-function ServiceRow({
+function ServiceCard({
   num,
   name,
   desc,
@@ -51,6 +51,7 @@ function ServiceRow({
         delay: Math.min(index * 0.04, 0.5),
         ease: [0.21, 0.47, 0.32, 0.98],
       }}
+      className="h-full"
     >
       <div
         role="article"
@@ -60,81 +61,76 @@ function ServiceRow({
         onBlur={() => setHovered(false)}
         tabIndex={0}
         style={{
-          borderBottom: "1px solid rgba(242,183,5,0.18)",
-          padding: "22px 0",
+          background: hovered ? "rgba(242,183,5,0.08)" : "rgba(255,255,255,0.02)",
+          border: hovered ? "1px solid rgba(242,183,5,0.4)" : "1px solid rgba(255,255,255,0.05)",
+          padding: "32px 24px",
           display: "flex",
-          alignItems: "center",
-          gap: "24px",
+          flexDirection: "column",
+          gap: "16px",
           cursor: "default",
-          transition: "padding-left 300ms ease",
-          paddingLeft: hovered ? "12px" : "0px",
+          transition: "all 300ms ease",
+          height: "100%",
+          borderRadius: "8px",
         }}
       >
-        {/* Number */}
-        <span
-          style={{
-            fontFamily: "var(--font-bebas)",
-            fontSize: "14px",
-            color: "#F2B705",
-            letterSpacing: "0.1em",
-            minWidth: "36px",
-            opacity: hovered ? 1 : 0.4,
-            transition: "opacity 300ms ease",
-          }}
-        >
-          {num}
-        </span>
+        <div className="flex justify-between items-start">
+          <span
+            style={{
+              fontFamily: "var(--font-bebas)",
+              fontSize: "14px",
+              color: "#F2B705",
+              letterSpacing: "0.1em",
+              opacity: hovered ? 1 : 0.6,
+              transition: "opacity 300ms ease",
+            }}
+          >
+            {num}
+          </span>
+          <span
+            style={{
+              color: hovered ? "#F2B705" : "rgba(248,245,238,0.18)",
+              fontSize: "18px",
+              transition: "color 300ms ease, transform 300ms ease",
+              transform: hovered ? "translateX(4px) translateY(-4px)" : "translateX(0) translateY(0)",
+            }}
+          >
+            ↗
+          </span>
+        </div>
 
-        {/* Name */}
-        <span
+        <h3
           style={{
             fontFamily: "var(--font-display)",
-            fontSize: "clamp(20px, 2.5vw, 34px)",
+            fontSize: "clamp(20px, 2vw, 26px)",
             fontWeight: 700,
             color: hovered ? "#F2B705" : "#F8F5EE",
-            lineHeight: 1.1,
-            flex: 1,
+            lineHeight: 1.2,
             transition: "color 300ms ease",
+            marginTop: "auto",
           }}
         >
           {name}
-        </span>
+        </h3>
 
-        {/* Descriptor — reveals on hover */}
-        <AnimatePresence>
-          {hovered && (
-            <motion.span
-              initial={{ opacity: 0, x: 12 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 12 }}
-              transition={{ duration: 0.22 }}
+        <div style={{ overflow: "hidden" }}>
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: hovered ? "auto" : 0, opacity: hovered ? 1 : 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <p
               style={{
                 fontFamily: "var(--font-body)",
                 fontSize: "14px",
-                color: "rgba(248,245,238,0.50)",
-                maxWidth: 320,
-                textAlign: "right",
+                color: "rgba(248,245,238,0.60)",
                 lineHeight: 1.5,
+                paddingTop: "12px",
               }}
-              className="hidden md:block"
             >
               {desc}
-            </motion.span>
-          )}
-        </AnimatePresence>
-
-        {/* Arrow */}
-        <span
-          style={{
-            color: hovered ? "#F2B705" : "rgba(248,245,238,0.18)",
-            fontSize: "18px",
-            transition: "color 300ms ease, transform 300ms ease",
-            transform: hovered ? "translateX(4px)" : "translateX(0)",
-            flexShrink: 0,
-          }}
-        >
-          →
-        </span>
+            </p>
+          </motion.div>
+        </div>
       </div>
     </motion.div>
   );
@@ -190,7 +186,7 @@ export default function ServicesSection() {
           }}
         >
           Architects of strategy.<br />
-          <em style={{ fontStyle: "italic" }}>Storytellers with purpose.</em>
+          <em>Storytellers with purpose.</em>
         </motion.h2>
 
         {/* Intro body — original from brief */}
@@ -216,10 +212,10 @@ export default function ServicesSection() {
         {/* Gold top rule */}
         <div style={{ height: "3px", background: "#F2B705" }} />
 
-        {/* Service rows */}
-        <div role="list">
+        {/* Service Grid */}
+        <div role="list" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-16">
           {services.map((s, i) => (
-            <ServiceRow key={s.num} {...s} index={i} inView={inView} />
+            <ServiceCard key={s.num} {...s} index={i} inView={inView} />
           ))}
         </div>
 

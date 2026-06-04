@@ -128,8 +128,9 @@ img {
 @utility btn-gold {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  padding: 14px 32px;
+  padding: 18px 40px;
   background: #F2B705;
   color: #0A0A0A;
   font-family: var(--font-body);
@@ -146,8 +147,9 @@ img {
 @utility btn-outline-cream {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  padding: 14px 32px;
+  padding: 18px 40px;
   background: transparent;
   color: #F8F5EE;
   font-family: var(--font-body);

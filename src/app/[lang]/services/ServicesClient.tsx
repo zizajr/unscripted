@@ -170,7 +170,7 @@ export default function ServicesClient() {
             initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
             style={{ fontFamily: "var(--font-display)", fontSize: "clamp(40px,6vw,80px)", fontWeight: 900, color: "#F8F5EE", lineHeight: 1.0, marginBottom: 32 }}>
             Architects of Strategy.<br />
-            <em style={{ fontStyle: "italic" }}>Storytellers with Purpose.</em>
+            <em>Storytellers with Purpose.</em>
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }}
             style={{ fontFamily: "var(--font-body)", fontSize: "clamp(16px,1.5vw,20px)", color: "rgba(248,245,238,0.65)", maxWidth: 640, lineHeight: 1.7 }}>
@@ -197,7 +197,7 @@ export default function ServicesClient() {
       <section style={{ background: "#1C1C2E", borderTop: "3px solid #F2B705" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "80px clamp(24px,6.25vw,80px)", textAlign: "center" }}>
           <FadeUp>
-            <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(28px,4vw,52px)", fontWeight: 900, fontStyle: "italic", color: "#F8F5EE", marginBottom: 32 }}>
+            <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(28px,4vw,52px)", fontWeight: 900, color: "#F8F5EE", marginBottom: 32 }}>
               Ready to get started?
             </p>
             <Link href="/contact" className="btn-gold" style={{ borderRadius: 100 }}>

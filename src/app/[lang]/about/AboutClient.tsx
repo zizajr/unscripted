@@ -92,7 +92,6 @@ export default function AboutClient() {
               fontFamily: "var(--font-display)",
               fontSize: "clamp(28px,4.5vw,64px)",
               fontWeight: 900,
-              fontStyle: "italic",
               color: "#F8F5EE",
               lineHeight: 1.1,
               maxWidth: 960,
