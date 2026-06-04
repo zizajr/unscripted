@@ -1,122 +1,458 @@
 "use client";
-import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
-import ThreeBarMark from "@/components/ThreeBarMark";
+import { motion, useScroll, useTransform } from "framer-motion";
 
-export default function HeroSection() {
+/* ─────────────────────────────────────────
+   Snake Game Constants
+───────────────────────────────────────── */
+const CELL  = 20;   // px per cell
+const SPEED = 140;  // ms per tick (desktop)
+
+type Dir = "UP" | "DOWN" | "LEFT" | "RIGHT";
+type Pt  = { x: number; y: number };
+
+function randomCell(cols: number, rows: number): Pt {
+  return {
+    x: Math.floor(Math.random() * cols),
+    y: Math.floor(Math.random() * rows),
+  };
+}
+
+/* ─────────────────────────────────────────
+   Snake Canvas Component
+───────────────────────────────────────── */
+function SnakeGame({ size }: { size: number }) {
+  const canvasRef  = useRef<HTMLCanvasElement>(null);
+  const stateRef   = useRef<{
+    snake: Pt[];
+    dir: Dir;
+    nextDir: Dir;
+    food: Pt;
+    alive: boolean;
+    paused: boolean;
+    timer: ReturnType<typeof setTimeout> | null;
+    glowTimer: ReturnType<typeof setTimeout> | null;
+    glowing: boolean;
+  }>({
+    snake:     [{ x: 5, y: 5 }],
+    dir:       "RIGHT",
+    nextDir:   "RIGHT",
+    food:      { x: 10, y: 10 },
+    alive:     true,
+    paused:    false,
+    timer:     null,
+    glowTimer: null,
+    glowing:   false,
+  });
+  const labelRef = useRef<HTMLDivElement>(null);
+
+  const cols = Math.floor(size / CELL);
+  const rows = Math.floor(size / CELL);
+
+  const draw = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    const s = stateRef.current;
+
+    // Background
+    ctx.fillStyle = "#0A0A0A";
+    ctx.fillRect(0, 0, size, size);
+
+    // Subtle grid dots
+    ctx.fillStyle = "rgba(255,255,255,0.03)";
+    for (let c = 0; c < cols; c++) {
+      for (let r = 0; r < rows; r++) {
+        ctx.beginPath();
+        ctx.arc(c * CELL + CELL / 2, r * CELL + CELL / 2, 1, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    // Food (Cream circle)
+    const fc = s.food;
+    ctx.fillStyle = "#F8F5EE";
+    ctx.beginPath();
+    ctx.arc(fc.x * CELL + CELL / 2, fc.y * CELL + CELL / 2, 4, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Snake (Gold segments)
+    s.snake.forEach((seg, i) => {
+      const alpha = i === 0 ? 1 : Math.max(0.5, 1 - i * 0.04);
+      ctx.fillStyle = i === 0 ? "#F2B705" : `rgba(242,183,5,${alpha})`;
+      const pad = i === 0 ? 1 : 2;
+      const r   = i === 0 ? 4 : 3;
+      roundRect(ctx, seg.x * CELL + pad, seg.y * CELL + pad, CELL - pad * 2, CELL - pad * 2, r);
+      ctx.fill();
+    });
+
+    // Glow border
+    if (s.glowing) {
+      ctx.strokeStyle = "rgba(242,183,5,0.9)";
+      ctx.lineWidth   = 2;
+      ctx.strokeRect(1, 1, size - 2, size - 2);
+    }
+  }, [size, cols, rows]);
+
+  const spawnFood = useCallback(() => {
+    const s = stateRef.current;
+    let f: Pt;
+    do { f = randomCell(cols, rows); }
+    while (s.snake.some(p => p.x === f.x && p.y === f.y));
+    s.food = f;
+  }, [cols, rows]);
+
+  const tick = useCallback(() => {
+    const s = stateRef.current;
+    if (!s.alive || s.paused) return;
+
+    s.dir = s.nextDir;
+    const head = s.snake[0];
+    const next: Pt = {
+      x: (head.x + (s.dir === "RIGHT" ? 1 : s.dir === "LEFT" ? -1 : 0) + cols) % cols,
+      y: (head.y + (s.dir === "DOWN"  ? 1 : s.dir === "UP"   ? -1 : 0) + rows) % rows,
+    };
+
+    // Collision with self
+    if (s.snake.slice(1).some(p => p.x === next.x && p.y === next.y)) {
+      s.alive = false;
+      draw();
+      // Fade, reset after 2s
+          if (canvasRef.current) {
+          canvasRef.current.style.opacity = "0.2";
+          setTimeout(() => {
+            if (canvasRef.current) canvasRef.current.style.opacity = "1";
+            s.snake   = [{ x: 5, y: 5 }];
+            s.dir     = "RIGHT";
+            s.nextDir = "RIGHT";
+            s.alive   = true;
+            spawnFood();
+            if (s.timer != null) clearTimeout(s.timer);
+            s.timer = setTimeout(tick, SPEED);
+          }, 2000);
+        }
+      return;
+    }
+
+    s.snake.unshift(next);
+
+    // Eat food
+    if (next.x === s.food.x && next.y === s.food.y) {
+      spawnFood();
+      s.glowing = true;
+      if (s.glowTimer != null) clearTimeout(s.glowTimer);
+      s.glowTimer = setTimeout(() => { s.glowing = false; }, 400);
+      if (labelRef.current) labelRef.current.textContent = "[ PLAYING ]";
+    } else {
+      s.snake.pop();
+    }
+
+    draw();
+    s.timer = setTimeout(tick, SPEED);
+  }, [cols, rows, draw, spawnFood]);
+
+  useEffect(() => {
+    const s    = stateRef.current;
+    s.snake    = [{ x: Math.floor(cols / 3), y: Math.floor(rows / 2) }];
+    s.dir      = "RIGHT";
+    s.nextDir  = "RIGHT";
+    s.alive    = true;
+    s.paused   = false;
+    spawnFood();
+    draw();
+    s.timer = setTimeout(tick, SPEED);
+
+    // Keyboard input
+    const onKey = (e: KeyboardEvent) => {
+      const { nextDir: d } = s;
+      if ((e.key === "ArrowUp"    || e.key === "w") && d !== "DOWN")  s.nextDir = "UP";
+      if ((e.key === "ArrowDown"  || e.key === "s") && d !== "UP")    s.nextDir = "DOWN";
+      if ((e.key === "ArrowLeft"  || e.key === "a") && d !== "RIGHT") s.nextDir = "LEFT";
+      if ((e.key === "ArrowRight" || e.key === "d") && d !== "LEFT")  s.nextDir = "RIGHT";
+    };
+    window.addEventListener("keydown", onKey);
+
+    // Pause on tab blur
+    const onBlur  = () => { s.paused = true; };
+    const onFocus = () => {
+      if (!s.paused) return;
+      s.paused = false;
+      if (s.timer != null) clearTimeout(s.timer);
+      s.timer = setTimeout(tick, SPEED);
+    };
+    window.addEventListener("blur",  onBlur);
+    window.addEventListener("focus", onFocus);
+
+    return () => {
+      if (s.timer != null) clearTimeout(s.timer);
+      if (s.glowTimer != null) clearTimeout(s.glowTimer);
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("blur",    onBlur);
+      window.removeEventListener("focus",   onFocus);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
-    <section className="relative min-h-screen bg-ink grid-overlay flex items-center overflow-hidden">
-      {/* Ambient glow */}
-      <div className="absolute top-1/4 left-1/3 w-[800px] h-[800px] rounded-full bg-violet/5 blur-[120px] pointer-events-none animate-[slowPan_20s_ease-in-out_infinite_alternate]" />
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full bg-gold/4 blur-[100px] pointer-events-none" />
+    <div className="relative flex flex-col items-center gap-3">
+      <canvas
+        ref={canvasRef}
+        width={size}
+        height={size}
+        className="transition-opacity duration-700"
+        style={{
+          border: "1px solid rgba(242,183,5,0.30)",
+          background: "#0A0A0A",
+          display: "block",
+        }}
+        aria-label="Decorative snake game"
+        role="img"
+      />
+      <div
+        ref={labelRef}
+        style={{
+          fontFamily: "var(--font-bebas)",
+          fontSize: "11px",
+          letterSpacing: "0.3em",
+          color: "rgba(242,183,5,0.5)",
+        }}
+      >
+        [ USE ARROW KEYS TO PLAY ]
+      </div>
+    </div>
+  );
+}
 
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-10 pt-32 pb-20 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div>
-            {/* Three-bar staggered entrance */}
-            <motion.div
-              className="mb-10"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4 }}
-            >
-              <motion.div
-                initial={{ scaleY: 0 }}
-                animate={{ scaleY: 1 }}
-                transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
-                style={{ transformOrigin: "bottom" }}
-              >
-                <ThreeBarMark size={48} />
-              </motion.div>
-            </motion.div>
+/* helper: rounded rect path */
+function roundRect(
+  ctx: CanvasRenderingContext2D,
+  x: number, y: number, w: number, h: number, r: number
+) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.arcTo(x + w, y, x + w, y + r, r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.arcTo(x + w, y + h, x + w - r, y + h, r);
+  ctx.lineTo(x + r, y + h);
+  ctx.arcTo(x, y + h, x, y + h - r, r);
+  ctx.lineTo(x, y + r);
+  ctx.arcTo(x, y, x + r, y, r);
+  ctx.closePath();
+}
 
-            <motion.p
-              className="font-accent text-xs tracking-[0.25em] text-gold mb-4"
-              style={{ fontFamily: "var(--font-bebas)" }}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-            >
-              UNSCRIPTED PRODUCTIONS
-            </motion.p>
+/* ─────────────────────────────────────────
+   Static Gold/Violet Fallback (reduced motion)
+───────────────────────────────────────── */
+function StaticFallback({ size }: { size: number }) {
+  return (
+    <div
+      style={{
+        width: size,
+        height: size,
+        border: "1px solid rgba(242,183,5,0.30)",
+        background: "linear-gradient(135deg, rgba(242,183,5,0.15) 0%, rgba(139,47,201,0.15) 100%)",
+      }}
+    />
+  );
+}
 
-            <motion.h1
-              className="text-6xl md:text-7xl lg:text-8xl font-black text-cream leading-tight tracking-tight"
-              style={{ fontFamily: "var(--font-playfair)" }}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
-            >
-              We Don't Script The World. We Film It.
-            </motion.h1>
+/* ─────────────────────────────────────────
+   Scroll Indicator
+───────────────────────────────────────── */
+function ScrollIndicator() {
+  return (
+    <div
+      className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+      aria-hidden="true"
+    >
+      <div
+        className="relative w-px overflow-hidden"
+        style={{ height: 64, background: "rgba(248,245,238,0.15)" }}
+      >
+        <motion.div
+          className="absolute top-0 left-0 w-full"
+          style={{ height: 24, background: "rgba(248,245,238,0.6)" }}
+          animate={{ y: [0, 40, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </div>
+    </div>
+  );
+}
 
-            <motion.p
-              className="mt-6 text-lg md:text-xl text-cream/60 max-w-lg leading-relaxed"
-              style={{ fontFamily: "var(--font-space-grotesk)" }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.6 }}
-            >
-              Premium video and podcast production — from Africa to the Middle East and everywhere the real story is.
-            </motion.p>
+/* ─────────────────────────────────────────
+   Hero Section (main export)
+───────────────────────────────────────── */
+export default function HeroSection() {
+  const sectionRef   = useRef<HTMLElement>(null);
+  const canvasWrapRef = useRef<HTMLDivElement>(null);
+  const { scrollY } = useScroll();
 
-            <motion.div
-              className="mt-10 flex flex-wrap gap-4"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.75, duration: 0.5 }}
-            >
-              <Link
-                href="/shows"
-                className="px-7 py-4 bg-gold text-ink font-semibold text-sm hover:bg-gold/90 transition-colors duration-200"
-                style={{ fontFamily: "var(--font-space-grotesk)" }}
-              >
-                See Our Work →
-              </Link>
-              <Link
-                href="/shows/main-street"
-                className="px-7 py-4 border border-white/20 text-cream/80 text-sm hover:border-white/40 hover:text-cream transition-all duration-200"
-                style={{ fontFamily: "var(--font-space-grotesk)" }}
-              >
-                Listen to MAIN STREET
-              </Link>
-            </motion.div>
-          </div>
+  // Fade canvas out as user scrolls
+  const canvasOpacity = useTransform(scrollY, [0, 200], [1, 0]);
 
-          {/* Right: decorative typographic element */}
-          <motion.div
-            className="hidden lg:flex items-center justify-center"
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
+  // Pause game on scroll > 200px
+  useEffect(() => {
+    const unsub = scrollY.on("change", (v) => {
+      const stateRefAny = (window as unknown as { __snakeState?: { paused: boolean; timer: ReturnType<typeof setTimeout>; alive: boolean } }).__snakeState;
+      if (stateRefAny) {
+        stateRefAny.paused = v > 200;
+      }
+    });
+    return () => unsub();
+  }, [scrollY]);
+
+  // Detect prefers-reduced-motion
+  const prefersReduced =
+    typeof window !== "undefined"
+      ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      : false;
+
+  const CANVAS_SIZE =
+    typeof window !== "undefined" && window.innerWidth < 768 ? 280 : 400;
+
+  return (
+    <section
+      ref={sectionRef}
+      className="relative min-h-screen flex items-center overflow-hidden"
+      style={{ background: "#0A0A0A" }}
+      aria-label="Hero"
+    >
+      {/* Grain texture */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E\")",
+          backgroundSize: "300px 300px",
+          zIndex: 1,
+        }}
+        aria-hidden="true"
+      />
+
+      {/* Violet ambient glow */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          top: "30%",
+          right: "15%",
+          width: 500,
+          height: 500,
+          background: "radial-gradient(ellipse, rgba(139,47,201,0.12) 0%, transparent 70%)",
+          filter: "blur(80px)",
+          zIndex: 1,
+        }}
+        aria-hidden="true"
+      />
+
+      {/* Content grid */}
+      <div
+        className="relative z-10 w-full flex flex-col lg:flex-row items-center"
+        style={{
+          maxWidth: "1280px",
+          margin: "0 auto",
+          padding: "120px clamp(24px, 6.25vw, 80px) 80px",
+          gap: "clamp(40px, 6vw, 80px)",
+        }}
+      >
+        {/* Left: text content */}
+        <div className="flex-1 flex flex-col gap-8">
+          {/* Overline */}
+          <motion.p
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
+            style={{
+              fontFamily: "var(--font-bebas)",
+              fontSize: "12px",
+              letterSpacing: "0.35em",
+              color: "#F2B705",
+            }}
           >
-            <div className="relative">
-              <div
-                className="text-[14rem] md:text-[18rem] font-black leading-none text-white/[0.02] select-none translate-y-8"
-                style={{ fontFamily: "var(--font-playfair)" }}
-              >
-                MS
-              </div>
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
-                <div className="w-px h-32 bg-gradient-to-b from-transparent via-gold/40 to-transparent" />
-                <ThreeBarMark size={32} />
-                <div className="w-px h-32 bg-gradient-to-b from-gold/40 via-violet/40 to-transparent" />
-              </div>
-            </div>
+            BRANDING · STRATEGY · COMMUNICATIONS
+          </motion.p>
+
+          {/* Headline */}
+          <motion.h1
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1, ease: [0.21, 0.47, 0.32, 0.98] }}
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(72px, 11vw, 160px)",
+              fontWeight: 900,
+              lineHeight: 0.88,
+              color: "#F8F5EE",
+              letterSpacing: "-0.02em",
+            }}
+          >
+            We Defy<br />
+            <em style={{ fontStyle: "italic" }}>Reason.</em>
+          </motion.h1>
+
+          {/* Subhead */}
+          <motion.p
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2, ease: [0.21, 0.47, 0.32, 0.98] }}
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: "clamp(17px, 2vw, 22px)",
+              color: "rgba(248,245,238,0.70)",
+              lineHeight: 1.6,
+              maxWidth: 560,
+            }}
+          >
+            We are a media, branding, and communications company built for
+            brands that believe in achieving the extraordinary. We don&apos;t
+            chase trends. We build the record.
+          </motion.p>
+
+          {/* CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.3, ease: [0.21, 0.47, 0.32, 0.98] }}
+            className="flex flex-wrap gap-4"
+          >
+            <Link href="/contact" className="btn-gold rounded-full">
+              Start a Project →
+            </Link>
+            <Link href="/work" className="btn-outline-cream rounded-full">
+              See Our Work
+            </Link>
           </motion.div>
         </div>
+
+        {/* Right: Snake game */}
+        <motion.div
+          ref={canvasWrapRef}
+          style={{ opacity: canvasOpacity }}
+          className="shrink-0 flex flex-col items-center"
+          initial={{ opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.9, delay: 0.4, ease: [0.21, 0.47, 0.32, 0.98] }}
+        >
+          {prefersReduced ? (
+            <StaticFallback size={CANVAS_SIZE} />
+          ) : (
+            <SnakeGame size={CANVAS_SIZE} />
+          )}
+        </motion.div>
       </div>
 
       {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2, duration: 0.5 }}
-      >
-        <div className="w-px h-12 bg-gradient-to-b from-white/30 to-transparent animate-bounce" />
-      </motion.div>
+      <ScrollIndicator />
+
+      {/* Gold bottom rule */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-px"
+        style={{ background: "rgba(242,183,5,0.15)" }}
+        aria-hidden="true"
+      />
     </section>
   );
 }

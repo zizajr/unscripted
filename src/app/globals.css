@@ -1,75 +1,193 @@
 @import "tailwindcss";
 
+/* ═══════════════════════════════════════════════
+   UNSCRIPTED — BRAND SYSTEM v2.0
+   Dark, editorial, premium.
+   Default canonical mode: Ink (#0A0A0A)
+═══════════════════════════════════════════════ */
+
 @theme {
-  --color-gold:     #F2B705;
-  --color-violet:   #8B2FC9;
+  /* ── Colour tokens ── */
   --color-ink:      #0A0A0A;
   --color-slate:    #1C1C2E;
   --color-cream:    #F8F5EE;
   --color-graphite: #3D3D3D;
-  --color-kigali:   #FF6B35;
-  --color-doha:     #00A896;
+  --color-gold:     #F2B705;
+  --color-violet:   #8B2FC9;
 
-  --font-display: var(--font-playfair), Georgia, serif;
-  --font-body:    var(--font-space-grotesk), system-ui, sans-serif;
-  --font-accent:  var(--font-bebas), Impact, sans-serif;
-
-  --section-spacing: clamp(5rem, 10vw, 8rem);
+  /* ── Font families ── */
+  --font-display: var(--font-playfair), Georgia, "Times New Roman", serif;
+  --font-body:    var(--font-space-grotesk), "Inter", system-ui, sans-serif;
+  --font-accent:  var(--font-bebas), "Impact", "Arial Narrow", sans-serif;
 }
 
+/* ── Reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
 
-html { scroll-behavior: smooth; }
-
+/* ── Base body ── */
 body {
-  background-color: var(--color-ink);
-  color: var(--color-cream);
+  background-color: #0A0A0A;
+  color: #F8F5EE;
   font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.75;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
+/* ── Selection ── */
 ::selection {
-  background: var(--color-gold);
-  color: var(--color-ink);
+  background: #F2B705;
+  color: #0A0A0A;
 }
 
-a { color: inherit; text-decoration: none; }
-
-img { max-width: 100%; display: block; }
-
-@utility grid-overlay {
-  background-image: repeating-linear-gradient(
-    90deg,
-    rgba(255,255,255,0.015) 0,
-    rgba(255,255,255,0.015) 1px,
-    transparent 0,
-    transparent 80px
-  );
+/* ── Links ── */
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
-@utility section-padding {
-  padding-top: var(--section-spacing);
-  padding-bottom: var(--section-spacing);
+/* ── Images ── */
+img {
+  max-width: 100%;
+  display: block;
 }
 
-@utility font-display { font-family: var(--font-display); }
-@utility font-accent  { font-family: var(--font-accent); }
-@utility font-body    { font-family: var(--font-body); }
-
-/* ── Focus visible ── */
+/* ── Focus ring — Gold, accessible ── */
+* {
+  outline-color: transparent;
+}
 :focus-visible {
-  outline: 1px solid var(--color-gold);
+  outline: 2px solid #F2B705;
   outline-offset: 4px;
+  border-radius: 2px;
 }
-
-/* Fix for potential glowing blue lines in some browsers */
-* { outline-color: transparent; }
-:focus-visible { outline-color: var(--color-gold); }
 
 /* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--color-ink); }
-::-webkit-scrollbar-thumb { background: var(--color-graphite); border-radius: 3px; }
+::-webkit-scrollbar-track { background: #0A0A0A; }
+::-webkit-scrollbar-thumb { background: #3D3D3D; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #F2B705; }
+
+/* ══════════════════════════════════════════════
+   UTILITY CLASSES (Tailwind 4 @utility — no
+   pseudo-elements or pseudo-classes allowed)
+══════════════════════════════════════════════ */
+
+@utility font-display { font-family: var(--font-display); }
+@utility font-accent  { font-family: var(--font-accent);  }
+@utility font-body    { font-family: var(--font-body);    }
+
+@utility section-pad {
+  padding-top:    clamp(80px, 10vw, 120px);
+  padding-bottom: clamp(80px, 10vw, 120px);
+}
+
+@utility container-wide {
+  max-width: 1280px;
+  margin-left:  auto;
+  margin-right: auto;
+  padding-left:  clamp(24px, 6.25vw, 80px);
+  padding-right: clamp(24px, 6.25vw, 80px);
+}
+
+@utility overline {
+  font-family: var(--font-accent);
+  font-size: 12px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+@utility gold-rule {
+  height: 3px;
+  background: #F2B705;
+  border: none;
+}
+
+@utility grain-bg {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 300px 300px;
+}
+
+@utility violet-glow {
+  position: relative;
+}
+
+/* ── Button base classes (hover handled in plain CSS below) ── */
+@utility btn-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: #F2B705;
+  color: #0A0A0A;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 15px;
+  border-radius: 100px;
+  border: 2px solid #F2B705;
+  cursor: pointer;
+  transition: background 300ms ease, color 300ms ease, transform 200ms ease;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+@utility btn-outline-cream {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: transparent;
+  color: #F8F5EE;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 15px;
+  border-radius: 100px;
+  border: 2px solid rgba(248,245,238,0.4);
+  cursor: pointer;
+  transition: border-color 300ms ease, color 300ms ease, transform 200ms ease;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+/* ── Button hover states (plain CSS) ── */
+.btn-gold:hover {
+  background: transparent;
+  color: #F2B705;
+  transform: translateY(-2px);
+}
+
+.btn-outline-cream:hover {
+  border-color: #F8F5EE;
+  color: #F8F5EE;
+  transform: translateY(-2px);
+}
+
+/* ── Ticker animation ── */
+@keyframes ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ── Reduced motion fallback ── */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}

@@ -1,20 +1,22 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { Suspense } from "react";
-import HeroSection from "@/components/home/HeroSection";
-import PositioningSection from "@/components/home/PositioningSection";
-import FeaturedShowSection from "@/components/home/FeaturedShowSection";
-import ShowPortfolioSection from "@/components/home/ShowPortfolioSection";
-import AboutThirtySection from "@/components/home/AboutThirtySection";
-import PartnersStrip from "@/components/home/PartnersStrip";
-import NewsletterSection from "@/components/home/NewsletterSection";
+import HeroSection      from "@/components/home/HeroSection";
+import CredentialsTicker from "@/components/home/CredentialsTicker";
+import AboutSection     from "@/components/home/AboutSection";
+import HowWeWorkSection from "@/components/home/HowWeWorkSection";
+import ServicesSection  from "@/components/home/ServicesSection";
+import MainStreetSection from "@/components/home/MainStreetSection";
+import WorkSection      from "@/components/home/WorkSection";
+import TeamSection      from "@/components/home/TeamSection";
+import ContactSection   from "@/components/home/ContactSection";
 
 export const metadata: Metadata = {
-  title: "Unscripted Productions",
-  description: "Premium video and podcast production from Africa and the Middle East. We make shows that stop people mid-scroll.",
+  title: "Unscripted — We Defy Reason. Branding & Communications Agency",
+  description:
+    "Africa's dark horse branding, marketing, and communications agency. We craft narratives, design experiences, and forge brand-changing connections.",
   openGraph: {
-    title: "Unscripted Productions",
-    description: "Premium video and podcast production from Africa and the Middle East. We make shows that stop people mid-scroll.",
+    title: "Unscripted — We Defy Reason. Branding & Communications Agency",
+    description:
+      "Africa's dark horse branding, marketing, and communications agency. We craft narratives, design experiences, and forge brand-changing connections.",
   },
 };
 
@@ -22,12 +24,14 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <PositioningSection />
-      <FeaturedShowSection />
-      <ShowPortfolioSection />
-      <AboutThirtySection />
-      <PartnersStrip />
-      <NewsletterSection />
+      <CredentialsTicker />
+      <AboutSection />
+      <HowWeWorkSection />
+      <ServicesSection />
+      <MainStreetSection />
+      <WorkSection />
+      <TeamSection />
+      <ContactSection />
     </>
   );
 }
