@@ -17,7 +17,7 @@
 
   /* ── Font families ── */
   --font-display: var(--font-playfair), Georgia, "Times New Roman", serif;
-  --font-body:    var(--font-lora), "Inter", system-ui, sans-serif;
+  --font-body:    var(--font-outfit), "Inter", system-ui, sans-serif;
   --font-accent:  var(--font-bebas), "Impact", "Arial Narrow", sans-serif;
 }
 
