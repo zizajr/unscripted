@@ -87,68 +87,87 @@ export default function AboutSection() {
           }}
         />
 
-        {/* Two-column body */}
+        {/* Two-column layout with values grid */}
         <motion.div
           custom={3}
           variants={FADE_UP}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16"
+          className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20"
         >
-          <div>
+          {/* Left Column: Big Editorial Statement */}
+          <div className="lg:col-span-5">
             <p
               style={{
                 fontFamily: "var(--font-body)",
-                fontSize: "17px",
-                color: "#3D3D3D",
-                lineHeight: 1.75,
-                marginBottom: "24px",
+                fontSize: "clamp(24px, 2.5vw, 32px)",
+                fontWeight: 700,
+                color: "#0A0A0A",
+                lineHeight: 1.3,
               }}
             >
-              We are the dark horse of branding, marketing, and communications
-              for established businesses, brands, and startups that believe in
-              achieving the extraordinary.
-            </p>
-            <p
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: "17px",
-                color: "#3D3D3D",
-                lineHeight: 1.75,
-              }}
-            >
-              Our work is centered on reimagining the epitome of our clients&apos;
-              success across various industries. With creativity that defies
-              reason, our diverse in-house talent ensures that all client needs
-              are met — and a little more.
+              We are a media, branding, and communications agency built for those who believe in achieving the extraordinary.
             </p>
           </div>
-          <div>
-            <p
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: "17px",
-                color: "#3D3D3D",
-                lineHeight: 1.75,
-                marginBottom: "24px",
-              }}
-            >
-              In a world inundated with content, we help our clients cut through
-              the noise with innovative campaigns that capture the essence of their
-              brands and captivate targeted audiences.
-            </p>
-            <p
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: "17px",
-                color: "#3D3D3D",
-                lineHeight: 1.75,
-              }}
-            >
-              Unscripted&apos;s seamless collaboration with clients makes us an
-              extension of your team — ensuring you grow with guided strategy to
-              achieve targeted results.
-            </p>
+
+          {/* Right Column: Values Grid */}
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-8">
+            {[
+              {
+                num: "01",
+                title: "Uncompromising Creativity",
+                desc: "We push boundaries with bold, editorial design and narratives that demand attention.",
+              },
+              {
+                num: "02",
+                title: "Guided Strategy",
+                desc: "Every campaign and design system is anchored in rigorous market insight to drive business results.",
+              },
+              {
+                num: "03",
+                title: "Cutting the Noise",
+                desc: "We craft targeted experiences that isolate your message from the background static.",
+              },
+              {
+                num: "04",
+                title: "Seamless Integration",
+                desc: "Operating as an extension of your business to execute with speed and cohesion.",
+              },
+            ].map((item) => (
+              <div key={item.title} className="flex flex-col gap-3">
+                <span
+                  style={{
+                    fontFamily: "var(--font-accent)",
+                    fontSize: "14px",
+                    letterSpacing: "0.15em",
+                    color: "#F2B705",
+                  }}
+                >
+                  {item.num} /
+                </span>
+                <h3
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    fontSize: "18px",
+                    fontWeight: 600,
+                    color: "#0A0A0A",
+                    lineHeight: 1.2,
+                  }}
+                >
+                  {item.title}
+                </h3>
+                <p
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    fontSize: "15px",
+                    color: "#3D3D3D",
+                    lineHeight: 1.6,
+                  }}
+                >
+                  {item.desc}
+                </p>
+              </div>
+            ))}
           </div>
         </motion.div>
 

@@ -1,5 +1,6 @@
 "use client";
 import { useRef } from "react";
+import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 
 const team = [
@@ -9,6 +10,7 @@ const team = [
     title: "Business Development & Product Lead",
     bio: "8 years across finance, business, and product development. UIX Design, Product Design, and Project Management.",
     accent: "#F2B705",
+    image: "/team-gavin.jpg",
   },
   {
     initials: "BA",
@@ -16,6 +18,7 @@ const team = [
     title: "Creative Director",
     bio: "A maestro orchestrating visual symphonies. Leads creative with an eye for detail and a passion for design.",
     accent: "#8B2FC9",
+    image: "/team-malik.jpg",
   },
   {
     initials: "BB",
@@ -30,6 +33,7 @@ const team = [
     title: "Co-CTO",
     bio: "Full-stack and mobile engineer. Former Tech Lead for a US Presidential campaign. Co-founder of JS Kampala.",
     accent: "#8B2FC9",
+    image: "/team-edward.jpg",
   },
 ];
 
@@ -39,6 +43,7 @@ function TeamCard({
   title,
   bio,
   accent,
+  image,
   index,
   inView,
 }: {
@@ -47,6 +52,7 @@ function TeamCard({
   title: string;
   bio: string;
   accent: string;
+  image?: string;
   index: number;
   inView: boolean;
 }) {
@@ -81,28 +87,40 @@ function TeamCard({
           borderTop: `3px solid ${accent}`,
         }}
       >
-        {/* Subtle background pattern */}
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            inset: 0,
-            background: `radial-gradient(ellipse at bottom right, ${accent}18 0%, transparent 70%)`,
-          }}
-        />
-        <span
-          style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "clamp(40px, 6vw, 64px)",
-            fontWeight: 900,
-            color: accent,
-            position: "relative",
-            zIndex: 1,
-            opacity: 0.7,
-          }}
-        >
-          {initials}
-        </span>
+        {image ? (
+          <Image
+            src={image}
+            alt={`Photo of ${name}`}
+            fill
+            className="object-cover object-top grayscale hover:grayscale-0 transition-all duration-500"
+            sizes="(max-width: 640px) 100vw, 25vw"
+          />
+        ) : (
+          <>
+            {/* Subtle background pattern */}
+            <div
+              aria-hidden="true"
+              style={{
+                position: "absolute",
+                inset: 0,
+                background: `radial-gradient(ellipse at bottom right, ${accent}18 0%, transparent 70%)`,
+              }}
+            />
+            <span
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(40px, 6vw, 64px)",
+                fontWeight: 900,
+                color: accent,
+                position: "relative",
+                zIndex: 1,
+                opacity: 0.7,
+              }}
+            >
+              {initials}
+            </span>
+          </>
+        )}
       </div>
 
       {/* Info */}

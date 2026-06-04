@@ -124,56 +124,58 @@ img {
   position: relative;
 }
 
-/* ── Button base classes (hover handled in plain CSS below) ── */
-@utility btn-gold {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 22px 48px;
-  background: #F2B705;
-  color: #0A0A0A;
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 15px;
-  border-radius: 100px;
-  border: 2px solid #F2B705;
-  cursor: pointer;
-  transition: background 300ms ease, color 300ms ease, transform 200ms ease;
-  white-space: nowrap;
-  text-decoration: none;
+/* ── Buttons (Vanilla CSS to guarantee compilation and override resets) ── */
+.btn-gold {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  padding: 16px 36px !important;
+  background: #F2B705 !important;
+  color: #0A0A0A !important;
+  font-family: var(--font-body) !important;
+  font-weight: 600 !important;
+  font-size: 15px !important;
+  border-radius: 9999px !important;
+  border: 2px solid #F2B705 !important;
+  cursor: pointer !important;
+  transition: all 300ms ease !important;
+  white-space: nowrap !important;
+  text-decoration: none !important;
 }
 
-@utility btn-outline-cream {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 22px 48px;
-  background: transparent;
-  color: #F8F5EE;
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 15px;
-  border-radius: 100px;
-  border: 2px solid rgba(248,245,238,0.4);
-  cursor: pointer;
-  transition: border-color 300ms ease, color 300ms ease, transform 200ms ease;
-  white-space: nowrap;
-  text-decoration: none;
+.btn-outline-cream {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  padding: 16px 36px !important;
+  background: transparent !important;
+  color: #F8F5EE !important;
+  font-family: var(--font-body) !important;
+  font-weight: 600 !important;
+  font-size: 15px !important;
+  border-radius: 9999px !important;
+  border: 2px solid rgba(248, 245, 238, 0.4) !important;
+  cursor: pointer !important;
+  transition: all 300ms ease !important;
+  white-space: nowrap !important;
+  text-decoration: none !important;
 }
 
 /* ── Button hover states (plain CSS) ── */
 .btn-gold:hover {
-  background: transparent;
-  color: #F2B705;
-  transform: translateY(-2px);
+  background: transparent !important;
+  color: #F2B705 !important;
+  border-color: #F2B705 !important;
+  transform: translateY(-2px) !important;
 }
 
 .btn-outline-cream:hover {
-  border-color: #F8F5EE;
-  color: #F8F5EE;
-  transform: translateY(-2px);
+  border-color: #F8F5EE !important;
+  color: #F8F5EE !important;
+  background: rgba(248, 245, 238, 0.05) !important;
+  transform: translateY(-2px) !important;
 }
 
 /* ── Ticker animation ── */
