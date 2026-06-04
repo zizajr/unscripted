@@ -1,16 +1,11 @@
 "use client";
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import ThreeBarMark from "./ThreeBarMark";
 
-const navLinks = [
-  { href: "/about",       label: "About" },
-  { href: "/services",    label: "Services" },
-  { href: "/work",        label: "Work" },
-  { href: "/main-street", label: "MAIN STREET" },
-];
+// Move navLinks inside component so it can use dict
 
 const langOptions = [
   { code: "en", label: "EN" },
@@ -18,11 +13,25 @@ const langOptions = [
   { code: "ar", label: "العربية" },
 ];
 
-export default function Navigation() {
+export default function Navigation({ dict, lang }: { dict: any; lang: string }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [lang, setLang] = useState("en");
+
+  const navLinks = [
+    { href: `/${lang}/about`,       label: dict.about },
+    { href: `/${lang}/services`,    label: dict.services },
+    { href: `/${lang}/work`,        label: dict.work },
+    { href: `/${lang}/main-street`, label: "MAIN STREET" },
+  ];
+
+  const handleLangSwitch = (code: string) => {
+    if (!pathname) return;
+    const segments = pathname.split("/");
+    segments[1] = code; // Replace the lang segment
+    router.push(segments.join("/"));
+  };
 
   const handleScroll = useCallback(() => {
     setScrolled(window.scrollY > 50);
@@ -77,7 +86,7 @@ export default function Navigation() {
         >
           {/* Logo */}
           <Link
-            href="/"
+            href={`/${lang}`}
             className="flex items-center gap-3 shrink-0 group"
             aria-label="Unscripted — home"
           >
@@ -122,7 +131,7 @@ export default function Navigation() {
               {langOptions.map(({ code, label }, i) => (
                 <span key={code} className="flex items-center gap-2">
                   <button
-                    onClick={() => setLang(code)}
+                    onClick={() => handleLangSwitch(code)}
                     className={`transition-colors duration-200 cursor-pointer ${
                       lang === code ? "text-gold" : "text-cream/40 hover:text-cream/70"
                     }`}
@@ -140,11 +149,11 @@ export default function Navigation() {
 
             {/* CTA */}
             <Link
-              href="/contact"
+              href={`/${lang}/contact`}
               className="btn-gold text-sm px-6 py-2.5 rounded-full"
               style={{ fontFamily: "var(--font-space-grotesk)" }}
             >
-              Get in Touch
+              {dict.startProject || "Start a Project"}
             </Link>
           </nav>
 
@@ -192,7 +201,7 @@ export default function Navigation() {
           >
             {/* Header row in overlay */}
             <div className="flex items-center justify-between px-6 h-16">
-              <Link href="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
+              <Link href={`/${lang}`} className="flex items-center gap-3" onClick={() => setOpen(false)}>
                 <ThreeBarMark size={24} />
                 <span
                   className="text-cream tracking-[0.2em] text-lg"
@@ -252,7 +261,7 @@ export default function Navigation() {
                 {langOptions.map(({ code, label }, i) => (
                   <span key={code} className="flex items-center gap-3">
                     <button
-                      onClick={() => setLang(code)}
+                      onClick={() => handleLangSwitch(code)}
                       className={`transition-colors duration-200 ${
                         lang === code ? "text-gold" : "text-cream/40 hover:text-cream/70"
                       }`}
@@ -267,11 +276,12 @@ export default function Navigation() {
               </div>
 
               <Link
-                href="/contact"
+                href={`/${lang}/contact`}
                 className="btn-gold text-center rounded-full text-base"
                 style={{ fontFamily: "var(--font-space-grotesk)" }}
+                onClick={() => setOpen(false)}
               >
-                Get in Touch
+                {dict.startProject || "Start a Project"}
               </Link>
             </div>
           </motion.div>

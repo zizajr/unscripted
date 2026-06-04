@@ -1,0 +1,14 @@
+{
+  "nav": {
+    "about": "À propos",
+    "services": "Services",
+    "work": "Réalisations",
+    "contact": "Contact",
+    "startProject": "Démarrer un Projet"
+  },
+  "footer": {
+    "privacy": "Politique de confidentialité",
+    "terms": "Conditions d'utilisation",
+    "rights": "Tous droits réservés"
+  }
+}

@@ -1,21 +1,21 @@
 import Link from "next/link";
 import ThreeBarMark from "./ThreeBarMark";
 
-const navLinks = [
-  { href: "/about",    label: "About" },
-  { href: "/services", label: "Services" },
-  { href: "/work",     label: "Work" },
-  { href: "/main-street", label: "MAIN STREET" },
-  { href: "/contact",  label: "Contact" },
-];
-
-const legalLinks = [
-  { href: "/privacy-policy", label: "Privacy Policy" },
-  { href: "/terms",          label: "Terms of Use" },
-];
-
-export default function Footer() {
+export default function Footer({ dict }: { dict: any }) {
   const year = new Date().getFullYear();
+
+  const navLinks = [
+    { href: "/about",    label: dict.about },
+    { href: "/services", label: dict.services },
+    { href: "/work",     label: dict.work },
+    { href: "/main-street", label: "MAIN STREET" },
+    { href: "/contact",  label: dict.contact },
+  ];
+
+  const legalLinks = [
+    { href: "/privacy-policy", label: dict.privacy },
+    { href: "/terms",          label: dict.terms },
+  ];
 
   return (
     <footer
@@ -106,7 +106,7 @@ export default function Footer() {
               color: "rgba(248,245,238,0.3)",
             }}
           >
-            © {year} Unscripted Technologies Limited. All rights reserved.
+            © {year} Unscripted Technologies Limited. {dict.rights}.
           </p>
 
           <div className="flex flex-wrap items-center gap-4">

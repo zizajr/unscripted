@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Space_Grotesk, Bebas_Neue } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { getDictionary } from "@/i18n/getDictionary";
 
 /* ── Fonts ── */
 const playfair = Playfair_Display({
@@ -75,15 +76,29 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export async function generateStaticParams() {
+  return [{ lang: "en" }, { lang: "fr" }, { lang: "ar" }];
+}
+
+export default async function RootLayout({
+  children,
+  params,
+}: Readonly<{
+  children: React.ReactNode;
+  params: Promise<{ lang: string }>;
+}>) {
+  const { lang } = await params;
+  const dir = lang === "ar" ? "rtl" : "ltr";
+  const dict = await getDictionary(lang as "en" | "fr" | "ar");
+  
   return (
-    <html lang="en">
+    <html lang={lang} dir={dir}>
       <body
         className={`${playfair.variable} ${spaceGrotesk.variable} ${bebasNeue.variable}`}
       >
-        <Navigation />
-        <main id="main-content">{children}</main>
-        <Footer />
+        <Navigation dict={dict.nav} lang={lang} />
+        <main>{children}</main>
+        <Footer dict={dict.footer} />
       </body>
     </html>
   );
