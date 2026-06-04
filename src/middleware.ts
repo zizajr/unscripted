@@ -20,7 +20,7 @@ function getLocale(request: NextRequest): string {
   }
 }
 
-export function proxy(request: NextRequest) {
+export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
   // Exclude static files, api routes, and Next.js internals

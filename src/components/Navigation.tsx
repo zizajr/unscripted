@@ -115,7 +115,11 @@ export default function Navigation({ dict, lang }: { dict: any; lang: string }) 
                     ? "text-gold"
                     : "text-cream/70 hover:text-cream"
                 }`}
-                style={{ fontFamily: "var(--font-display)", fontStyle: "italic" }}
+                style={{
+                  fontFamily: "var(--font-body)",
+                  fontVariant: label === "Main Street" ? "small-caps" : "normal",
+                  fontWeight: 500,
+                }}
               >
                 {label}
               </Link>
@@ -151,7 +155,7 @@ export default function Navigation({ dict, lang }: { dict: any; lang: string }) 
             <Link
               href={`/${lang}/contact`}
               className="btn-gold rounded-full"
-              style={{ fontFamily: "var(--font-display)", fontStyle: "italic" }}
+              style={{ fontFamily: "var(--font-body)", fontWeight: 600 }}
             >
               {dict.startProject || "Start a Project"}
             </Link>
@@ -239,10 +243,11 @@ export default function Navigation({ dict, lang }: { dict: any; lang: string }) 
                         : "text-cream hover:text-gold"
                     }`}
                     style={{
-                      fontFamily: "var(--font-display)",
+                      fontFamily: "var(--font-body)",
                       fontSize: "clamp(32px, 8vw, 48px)",
                       fontWeight: 700,
                       lineHeight: 1.1,
+                      fontVariant: label === "Main Street" ? "small-caps" : "normal",
                     }}
                   >
                     {label}
@@ -278,7 +283,7 @@ export default function Navigation({ dict, lang }: { dict: any; lang: string }) 
               <Link
                 href={`/${lang}/contact`}
                 className="btn-gold rounded-full flex justify-center items-center w-full"
-                style={{ fontFamily: "var(--font-display)", fontStyle: "italic" }}
+                style={{ fontFamily: "var(--font-body)", fontWeight: 600 }}
                 onClick={() => setOpen(false)}
               >
                 {dict.startProject || "Start a Project"}
