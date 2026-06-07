@@ -35,8 +35,8 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
       <HowWeWorkSection />
       <ServicesSection />
       <MainStreetSection />
-      <WorkSection />
-      <TractionSection />
+      {/* <WorkSection /> */}
+      {/* <TractionSection /> */}
       <TeamSection />
       <ContactSection />
     </>

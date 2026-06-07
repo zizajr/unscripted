@@ -20,6 +20,7 @@ const team = [
     accent: "#8B2FC9",
     image: "/team-malik.jpg",
   },
+  /*
   {
     initials: "BB",
     name: "Bruce Bagarukayo",
@@ -27,6 +28,7 @@ const team = [
     bio: "Backend engineer and technology leader. Author of the first MTN MoMo SDK for East Africa on PyPI.",
     accent: "#F2B705",
   },
+  */
   {
     initials: "KE",
     name: "Kayondo Edward",

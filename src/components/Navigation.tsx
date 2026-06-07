@@ -22,7 +22,6 @@ export default function Navigation({ dict, lang }: { dict: any; lang: string }) 
   const navLinks = [
     { href: `/${lang}/about`,       label: dict.about },
     { href: `/${lang}/services`,    label: dict.services },
-    { href: `/${lang}/work`,        label: dict.work },
     { href: `/${lang}/main-street`, label: "Main Street" },
   ];
 

@@ -537,7 +537,7 @@ export default function HeroSection({ dict, lang }: { dict?: any, lang?: string 
             transition={{ duration: 0.7, delay: 0.1, ease: [0.21, 0.47, 0.32, 0.98] }}
             style={{
               fontFamily: "var(--font-display)",
-              fontSize: "clamp(72px, 11vw, 160px)",
+              fontSize: "clamp(44px, 10vw, 160px)",
               fontWeight: 900,
               lineHeight: 0.88,
               color: "#F8F5EE",
@@ -584,7 +584,7 @@ export default function HeroSection({ dict, lang }: { dict?: any, lang?: string 
         <motion.div
           ref={canvasWrapRef}
           style={{ opacity: canvasOpacity }}
-          className="shrink-0 flex flex-col items-center"
+          className="hidden lg:flex shrink-0 flex-col items-center"
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, delay: 0.4, ease: [0.21, 0.47, 0.32, 0.98] }}

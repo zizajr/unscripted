@@ -39,6 +39,7 @@ const team = [
     image: "/team-malik.jpg",
     bio: `A maestro orchestrating visual symphonies, Bolton Abdulmalik is the Creative Director at Unscripted. As the creative force behind the agency's visual identity, Bolton combines an eye for detail with a passion for design.\n\nNotable clients: FX Pesa, Nyaka Global, TicketDaddy.`,
   },
+  /*
   {
     initials: "BB",
     name: "Bruce Bagarukayo",
@@ -46,6 +47,7 @@ const team = [
     accent: "#F2B705",
     bio: `Bruce Bagarukayo is a backend engineer and technology leader with a rare combination of financial technology depth and open-source platform contribution in East Africa.\n\nHe authored and published the first Python SDK for the MTN Mobile Money API on PyPI — making it the first publicly available open-source MTN MoMo integration library for East African developers. He served as CTO at Hamz Ltd (leading the build of HamzPay mobile wallet) and CTO at TicketDaddy Inc (designing the Smart Tickets platform — 600,000+ ticket transactions). He also led the Zelomove production database schemas, MTN MoMo integration, and full DevOps pipeline.`,
   },
+  */
   {
     initials: "KE",
     name: "Kayondo Edward",

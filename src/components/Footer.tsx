@@ -7,7 +7,6 @@ export default function Footer({ dict }: { dict: any }) {
   const navLinks = [
     { href: "/about",    label: dict.about },
     { href: "/services", label: dict.services },
-    { href: "/work",     label: dict.work },
     { href: "/main-street", label: "MAIN STREET" },
     { href: "/contact",  label: dict.contact },
   ];

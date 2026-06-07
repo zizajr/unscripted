@@ -12,6 +12,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { notFound } from "next/navigation";
+
 export default function WorkPage() {
-  return <WorkClient />;
+  notFound();
 }
