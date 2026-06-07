@@ -509,7 +509,7 @@ export default function HeroSection({ dict, lang }: { dict?: any, lang?: string 
         style={{
           maxWidth: "1280px",
           margin: "0 auto",
-          padding: "120px clamp(24px, 6.25vw, 80px) 80px",
+          padding: "clamp(88px, 12vh, 120px) clamp(24px, 6.25vw, 80px) 80px",
           gap: "clamp(40px, 6vw, 80px)",
         }}
       >

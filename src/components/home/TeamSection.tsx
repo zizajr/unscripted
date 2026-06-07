@@ -251,9 +251,14 @@ export default function TeamSection({ dict }: { dict?: any }) {
 
           {/* 3-column grid to balance 3 members */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {(dict?.team || team).map((member: any, i: number) => (
-              <TeamCard key={member.name} {...member} index={i} inView={inView} />
-            ))}
+            {(dict?.team || team).map((member: any, i: number) => {
+              // Merge structural data (images, accent) with translated text
+              const baseMember = team.find((t) => t.initials === member.initials) || team[i] || {};
+              const fullMember = { ...baseMember, ...member };
+              return (
+                <TeamCard key={fullMember.name} {...fullMember} index={i} inView={inView} />
+              );
+            })}
           </div>
         </div>
       </div>
