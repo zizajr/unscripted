@@ -19,5 +19,23 @@
     "privacy": "Politique de confidentialité",
     "terms": "Conditions d'utilisation",
     "rights": "Tous droits réservés"
+  },
+  "contact": {
+    "title1": "Construisons",
+    "title2": "Quelque chose.",
+    "nameLabel": "NOM *",
+    "emailLabel": "E-MAIL *",
+    "companyLabel": "ENTREPRISE",
+    "budgetLabel": "BUDGET *",
+    "selectBudget": "Sélectionnez un budget…",
+    "heardLabel": "COMMENT NOUS AVEZ-VOUS CONNU ?",
+    "selectHeard": "Sélectionnez une option… (facultatif)",
+    "messageLabel": "MESSAGE * (20 - 2 000 caractères)",
+    "messagePlaceholder": "Parlez-nous de votre projet…",
+    "sendBtn": "Envoyer le message",
+    "sendingBtn": "Envoi en cours…",
+    "successTitle": "Message reçu.",
+    "successSub": "Nous vous contacterons bientôt.",
+    "errorFallback": "Une erreur s'est produite. Veuillez nous écrire directement à defy@theunscripted.xyz"
   }
 }

@@ -19,5 +19,23 @@
     "privacy": "سياسة الخصوصية",
     "terms": "شروط الاستخدام",
     "rights": "جميع الحقوق محفوظة"
+  },
+  "contact": {
+    "title1": "لنبنِ",
+    "title2": "شيئاً.",
+    "nameLabel": "الاسم *",
+    "emailLabel": "البريد الإلكتروني *",
+    "companyLabel": "الشركة",
+    "budgetLabel": "الميزانية *",
+    "selectBudget": "حدد نطاق الميزانية…",
+    "heardLabel": "كيف سمعت عنا؟",
+    "selectHeard": "حدد خياراً… (اختياري)",
+    "messageLabel": "الرسالة * (20 - 2000 حرف)",
+    "messagePlaceholder": "أخبرنا عن مشروعك…",
+    "sendBtn": "إرسال الرسالة",
+    "sendingBtn": "جارٍ الإرسال…",
+    "successTitle": "تم استلام الرسالة.",
+    "successSub": "سنتواصل معك قريباً.",
+    "errorFallback": "حدث خطأ ما. يرجى مراسلتنا مباشرةً على defy@theunscripted.xyz"
   }
 }

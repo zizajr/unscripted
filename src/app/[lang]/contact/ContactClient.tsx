@@ -19,6 +19,14 @@ const HOW_HEARD = [
   "Industry Event", "Press / Media", "Other",
 ];
 
+const BUDGET_RANGES = [
+  "< $1,500",
+  "$1,500 - $5,000",
+  "$5,000 - $10,000",
+  "$10,000 - $25,000",
+  "$25,000+"
+];
+
 const labelStyle: React.CSSProperties = {
   fontFamily: "var(--font-bebas)",
   fontSize: "11px",
@@ -62,7 +70,7 @@ function blurBorder(e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement |
 export default function ContactClient() {
   const [form, setForm] = useState({
     name: "", email: "", company: "",
-    service: "", howHeard: "", message: "", _honeypot: "",
+    service: "", budget: "", howHeard: "", message: "", _honeypot: "",
   });
   const [status, setStatus] = useState<FormState>("idle");
   const [errorMsg, setErrorMsg] = useState("");
@@ -209,6 +217,19 @@ export default function ContactClient() {
                       </select>
                     </div>
 
+                    {/* Budget */}
+                    <div>
+                      <label htmlFor="cp-budget" style={labelStyle}>BUDGET *</label>
+                      <select id="cp-budget" name="budget" value={form.budget} onChange={handleChange} required aria-required="true"
+                        style={{ ...selectStyle, color: form.budget ? "#F8F5EE" : "rgba(248,245,238,0.3)" }}
+                        onFocus={focusBorder} onBlur={blurBorder}>
+                        <option value="" disabled style={{ background: "#0A0A0A" }}>Select a budget range…</option>
+                        {BUDGET_RANGES.map(b => (
+                          <option key={b} value={b} style={{ background: "#0A0A0A" }}>{b}</option>
+                        ))}
+                      </select>
+                    </div>
+
                     {/* How did you hear */}
                     <div>
                       <label htmlFor="cp-heard" style={labelStyle}>HOW DID YOU HEAR ABOUT US?</label>
@@ -224,8 +245,8 @@ export default function ContactClient() {
 
                     {/* Message */}
                     <div>
-                      <label htmlFor="cp-message" style={labelStyle}>MESSAGE *</label>
-                      <textarea id="cp-message" name="message" required aria-required="true" rows={5}
+                      <label htmlFor="cp-message" style={labelStyle}>MESSAGE * (20 - 2,000 characters)</label>
+                      <textarea id="cp-message" name="message" required aria-required="true" rows={5} minLength={20} maxLength={2000}
                         value={form.message} onChange={handleChange}
                         style={{ ...inputStyle, resize: "none", lineHeight: 1.7 }}
                         placeholder="Tell us about your project…"

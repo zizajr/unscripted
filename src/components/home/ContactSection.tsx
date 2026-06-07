@@ -4,16 +4,24 @@ import { motion, useInView } from "framer-motion";
 
 type FormState = "idle" | "sending" | "success" | "error";
 
+const BUDGET_RANGES = [
+  "< $1,500",
+  "$1,500 - $5,000",
+  "$5,000 - $10,000",
+  "$10,000 - $25,000",
+  "$25,000+"
+];
+
 export default function ContactSection() {
   const ref    = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
-  const [form, setForm] = useState({ name: "", email: "", company: "", message: "", _honeypot: "" });
+  const [form, setForm] = useState({ name: "", email: "", company: "", budget: "", message: "", _honeypot: "" });
   const [status, setStatus] = useState<FormState>("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -211,7 +219,7 @@ export default function ContactSection() {
                 </div>
 
                 {/* Company */}
-                <div className="sm:col-span-2">
+                <div>
                   <label htmlFor="contact-company" style={labelStyle}>
                     COMPANY
                   </label>
@@ -228,16 +236,41 @@ export default function ContactSection() {
                   />
                 </div>
 
+                {/* Budget */}
+                <div>
+                  <label htmlFor="contact-budget" style={labelStyle}>
+                    BUDGET *
+                  </label>
+                  <select
+                    id="contact-budget"
+                    name="budget"
+                    required
+                    aria-required="true"
+                    value={form.budget}
+                    onChange={handleChange}
+                    style={{ ...inputStyle, cursor: "pointer", appearance: "none", WebkitAppearance: "none", backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'8\' viewBox=\'0 0 12 8\'%3E%3Cpath d=\'M1 1l5 5 5-5\' stroke=\'%23F2B705\' stroke-width=\'1.5\' fill=\'none\'/%3E%3C/svg%3E")', backgroundRepeat: "no-repeat", backgroundPosition: "right 4px center", paddingRight: "24px" }}
+                    onFocus={(e) => (e.target.style.borderBottomColor = "#F2B705")}
+                    onBlur={(e) => (e.target.style.borderBottomColor = "rgba(248,245,238,0.2)")}
+                  >
+                    <option value="" disabled style={{ background: "#0A0A0A" }}>Select a budget range…</option>
+                    {BUDGET_RANGES.map((b) => (
+                      <option key={b} value={b} style={{ background: "#0A0A0A" }}>{b}</option>
+                    ))}
+                  </select>
+                </div>
+
                 {/* Message */}
                 <div className="sm:col-span-2">
                   <label htmlFor="contact-message" style={labelStyle}>
-                    MESSAGE *
+                    MESSAGE * (20 - 2,000 characters)
                   </label>
                   <textarea
                     id="contact-message"
                     name="message"
                     required
                     aria-required="true"
+                    minLength={20}
+                    maxLength={2000}
                     rows={4}
                     value={form.message}
                     onChange={handleChange}

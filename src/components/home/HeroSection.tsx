@@ -561,7 +561,7 @@ export default function HeroSection({ dict, lang }: { dict?: any, lang?: string 
               maxWidth: 560,
             }}
           >
-            {dict?.heroSubhead || "We are a media, branding, and communications company built for brands that believe in achieving the extraordinary. We don't chase trends. We build the record."}
+            {dict?.heroSubhead || "We are the digital agency built for brands that believe in achieving the extraordinary. We don't chase trends. We build the record."}
           </motion.p>
 
           {/* CTAs */}

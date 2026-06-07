@@ -4,6 +4,7 @@ import "../globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { getDictionary } from "@/i18n/getDictionary";
+import { Analytics } from "@vercel/analytics/react";
 
 /* ── Fonts ── */
 const playfair = Playfair_Display({
@@ -99,6 +100,30 @@ export default async function RootLayout({
         <Navigation dict={dict.nav} lang={lang} />
         <main>{children}</main>
         <Footer dict={dict.footer} />
+        <Analytics />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Unscripted",
+              url: "https://theunscripted.xyz",
+              logo: "https://theunscripted.xyz/og-image.png",
+              description: "Africa's dark horse branding, marketing, and communications agency. We craft narratives, design experiences, and forge brand-changing connections.",
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "Kigali",
+                addressCountry: "RW"
+              },
+              contactPoint: {
+                "@type": "ContactPoint",
+                email: "defy@theunscripted.xyz",
+                contactType: "customer service"
+              }
+            })
+          }}
+        />
       </body>
     </html>
   );

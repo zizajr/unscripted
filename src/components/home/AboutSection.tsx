@@ -106,7 +106,7 @@ export default function AboutSection() {
                 lineHeight: 1.3,
               }}
             >
-              We are a media, branding, and communications agency built for those who believe in achieving the extraordinary.
+              We are the digital agency built for brands that believe in achieving the extraordinary.
             </p>
           </div>
 

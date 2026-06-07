@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server";
 import { headers } from "next/headers";
+import nodemailer from "nodemailer";
 
 // ─── Simple in-memory rate limiter ───────────────────────────────────────────
 // Allows max 3 submissions per IP per 10 minutes.
-// This resets whenever the serverless function cold-starts, which is fine for
-// our purpose — it stops burst spam without blocking legitimate users.
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 const RATE_LIMIT_MAX      = 3;
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000; // 10 minutes
@@ -44,21 +43,18 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { name, email, company, message, service, howHeard, _honeypot } = body;
+    const { name, email, company, message, service, howHeard, budget, _honeypot } = body;
 
     // ── Honeypot check ────────────────────────────────────────────────────────
-    // Bots fill every visible field including hidden ones.
-    // Real users never see or touch _honeypot, so it stays blank.
     if (_honeypot) {
       console.warn(`Honeypot triggered — bot submission blocked (IP: ${ip})`);
-      // Return 200 so bots think they succeeded (don't alert them to the trap)
       return NextResponse.json({ success: true }, { status: 200 });
     }
 
     // ── Field validation ──────────────────────────────────────────────────────
-    if (!name || !email || !message) {
+    if (!name || !email || !message || !budget) {
       return NextResponse.json(
-        { error: "Missing required fields (name, email, message)" },
+        { error: "Missing required fields (name, email, budget, message)" },
         { status: 400 }
       );
     }
@@ -72,8 +68,15 @@ export async function POST(request: Request) {
       );
     }
 
-    // Basic length guards to stop oversized payloads
-    if (message.length > 5000 || name.length > 200 || email.length > 200) {
+    // Character length constraints for message
+    if (message.length < 20 || message.length > 2000) {
+      return NextResponse.json(
+        { error: "Message must be between 20 and 2000 characters." },
+        { status: 400 }
+      );
+    }
+
+    if (name.length > 200 || email.length > 200) {
       return NextResponse.json(
         { error: "One or more fields exceed the maximum allowed length." },
         { status: 400 }
@@ -86,69 +89,37 @@ export async function POST(request: Request) {
     console.log("Email:     ", email);
     console.log("Company:   ", company || "N/A");
     console.log("Service:   ", service || "N/A");
+    console.log("Budget:    ", budget || "N/A");
     console.log("How Heard: ", howHeard || "N/A");
     console.log("Message:   ", message.slice(0, 200), message.length > 200 ? "…" : "");
     console.log("----------------------------------------");
 
     // ── Email dispatch ────────────────────────────────────────────────────────
     // Destination: defy@theunscripted.xyz (live on Zoho)
-    const apiKey           = process.env.RESEND_API_KEY;
     const notificationEmail =
       process.env.CONTACT_NOTIFICATION_EMAIL || "defy@theunscripted.xyz";
 
-    if (apiKey) {
-      // Option 1: Resend (when key is configured in Vercel env vars)
-      const res = await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          from: "Unscripted Website <website@theunscripted.xyz>",
-          to:   notificationEmail,
-          reply_to: email,
-          subject: `New Inquiry — ${name}${company ? ` (${company})` : ""}`,
-          html: buildEmailHtml({ name, email, company, service, howHeard, message }),
-        }),
-      });
+    const transporter = nodemailer.createTransport({
+      host: "smtp.zoho.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: "defy@theunscripted.xyz",
+        pass: process.env.ZOHO_APP_PASSWORD,
+      },
+    });
 
-      if (!res.ok) throw new Error("Resend API failed");
-      console.log("Dispatched via Resend.");
-    } else {
-      // Option 2: FormSubmit zero-config relay (no key needed)
-      const res = await fetch(
-        `https://formsubmit.co/ajax/${notificationEmail}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            Name:        name,
-            Email:       email,
-            Company:     company     || "N/A",
-            Service:     service     || "N/A",
-            "How Heard": howHeard    || "N/A",
-            Message:     message,
-            _subject:    `New Inquiry — ${name}${company ? ` (${company})` : ""} | Unscripted`,
-            _replyto:    email,
-            // Disable FormSubmit's own captcha page — we handle spam ourselves
-            _captcha:    "false",
-          }),
-        }
-      );
+    await transporter.sendMail({
+      from: "defy@theunscripted.xyz", // Must be the authenticated Zoho user
+      to: notificationEmail,
+      replyTo: email,
+      subject: `New Inquiry — ${name}${company ? ` (${company})` : ""}`,
+      html: buildEmailHtml({ name, email, company, service, howHeard, budget, message }),
+    });
 
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        console.error("FormSubmit error:", err);
-        throw new Error("FormSubmit relay failed");
-      }
-      console.log(`Dispatched via FormSubmit → ${notificationEmail}`);
-    }
-
+    console.log(`Dispatched via Zoho SMTP to ${notificationEmail}`);
     return NextResponse.json({ success: true }, { status: 201 });
+
   } catch (error: unknown) {
     console.error("Contact API error:", error);
     return NextResponse.json(
@@ -160,10 +131,10 @@ export async function POST(request: Request) {
 
 // ─── Email HTML template ──────────────────────────────────────────────────────
 function buildEmailHtml({
-  name, email, company, service, howHeard, message,
+  name, email, company, service, howHeard, budget, message,
 }: {
   name: string; email: string; company?: string;
-  service?: string; howHeard?: string; message: string;
+  service?: string; howHeard?: string; budget: string; message: string;
 }) {
   const row = (label: string, value: string) =>
     value && value !== "N/A"
@@ -185,6 +156,7 @@ function buildEmailHtml({
           ${row("Email",      `<a href="mailto:${email}" style="color:#8B2FC9;">${email}</a>`)}
           ${row("Company",    company  || "")}
           ${row("Service",    service  || "")}
+          ${row("Budget",     budget   || "")}
           ${row("How Heard",  howHeard || "")}
         </table>
         <div style="background:#fff;padding:20px;border-left:4px solid #F2B705;border-radius:4px;">
