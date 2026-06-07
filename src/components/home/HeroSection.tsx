@@ -420,7 +420,7 @@ function StaticFallback({ size }: { size: number }) {
 function ScrollIndicator() {
   return (
     <div
-      className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+      className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2"
       aria-hidden="true"
     >
       <div
@@ -472,7 +472,7 @@ export default function HeroSection({ dict, lang }: { dict?: any, lang?: string 
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex items-start lg:items-center overflow-hidden"
+      className="relative lg:min-h-screen flex items-start lg:items-center overflow-hidden"
       style={{ background: "#0A0A0A" }}
       aria-label="Hero"
     >
