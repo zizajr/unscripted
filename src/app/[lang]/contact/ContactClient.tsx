@@ -88,7 +88,7 @@ export default function ContactClient() {
       }
     } catch {
       setStatus("error");
-      setErrorMsg("Something went wrong. Please email us directly at hello@theunscripted.xyz");
+      setErrorMsg("Something went wrong. Please email us directly at defy@theunscripted.xyz");
     }
   };
 
@@ -109,11 +109,11 @@ export default function ContactClient() {
           </motion.h1>
 
           {/* Email */}
-          <motion.a href="mailto:hello@theunscripted.xyz"
+          <motion.a href="mailto:defy@theunscripted.xyz"
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.15, ease: EASE }}
             style={{ fontFamily: "var(--font-body)", fontSize: "clamp(18px,2.5vw,28px)", fontWeight: 700, color: "#F2B705", display: "inline-block", marginBottom: 72, transition: "color 0.2s ease" }}
             className="hover:text-cream">
-            hello@theunscripted.xyz
+            defy@theunscripted.xyz
           </motion.a>
 
           {/* Location + Form grid */}

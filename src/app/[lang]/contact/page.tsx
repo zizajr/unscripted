@@ -4,7 +4,7 @@ import ContactClient from "./ContactClient";
 export const metadata: Metadata = {
   title: "Contact Unscripted — Start a Project",
   description:
-    "Ready to defy reason? Get in touch with the Unscripted team. hello@theunscripted.xyz",
+    "Ready to defy reason? Get in touch with the Unscripted team. defy@theunscripted.xyz",
   openGraph: {
     title: "Contact Unscripted — Start a Project",
     description: "Ready to defy reason? Get in touch with the Unscripted team.",

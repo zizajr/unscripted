@@ -49,7 +49,7 @@ export default function PrivacyPolicyPage() {
           <p>
             If you have any questions about this privacy policy or our privacy practices, please contact us at:
             <br /><br />
-            <strong>Email address:</strong> <a href="mailto:hello@theunscripted.xyz" style={{ color: "#F2B705" }}>hello@theunscripted.xyz</a>
+            <strong>Email address:</strong> <a href="mailto:defy@theunscripted.xyz" style={{ color: "#F2B705" }}>defy@theunscripted.xyz</a>
             <br />
             <strong>Location:</strong> Kigali, Rwanda
           </p>

@@ -223,11 +223,11 @@ export default function ServicesClient() {
                 Let&apos;s build something<br />exceptional together.
               </h2>
               <a
-                href="mailto:hello@theunscripted.xyz"
+                href="mailto:defy@theunscripted.xyz"
                 className="text-lg md:text-xl font-medium text-cream/60 hover:text-gold transition-colors duration-200"
                 style={{ fontFamily: "var(--font-body)" }}
               >
-                hello@theunscripted.xyz
+                defy@theunscripted.xyz
               </a>
             </div>
 

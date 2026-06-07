@@ -76,7 +76,7 @@ export default function Footer({ dict }: { dict: any }) {
 
           {/* Email */}
           <a
-            href="mailto:hello@theunscripted.xyz"
+            href="mailto:defy@theunscripted.xyz"
             style={{
               fontFamily: "var(--font-body)",
               fontSize: "14px",
@@ -86,7 +86,7 @@ export default function Footer({ dict }: { dict: any }) {
             }}
             className="hover:text-cream shrink-0"
           >
-            hello@theunscripted.xyz
+            defy@theunscripted.xyz
           </a>
         </div>
 

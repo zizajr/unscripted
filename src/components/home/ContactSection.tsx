@@ -36,7 +36,7 @@ export default function ContactSection() {
       }
     } catch {
       setStatus("error");
-      setErrorMsg("Something went wrong. Please email us directly at hello@theunscripted.xyz");
+      setErrorMsg("Something went wrong. Please email us directly at defy@theunscripted.xyz");
     }
   };
 
@@ -100,7 +100,7 @@ export default function ContactSection() {
 
         {/* Email */}
         <motion.a
-          href="mailto:hello@theunscripted.xyz"
+          href="mailto:defy@theunscripted.xyz"
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.15 }}
@@ -115,7 +115,7 @@ export default function ContactSection() {
           }}
           className="hover:text-cream"
         >
-          hello@theunscripted.xyz
+          defy@theunscripted.xyz
         </motion.a>
 
         {/* Contact form */}
