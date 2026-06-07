@@ -91,10 +91,10 @@ export async function POST(request: Request) {
     console.log("----------------------------------------");
 
     // ── Email dispatch ────────────────────────────────────────────────────────
-    // Destination: withunscripted@gmail.com (until custom domain mail is live)
+    // Destination: defy@theunscripted.xyz (live on Zoho)
     const apiKey           = process.env.RESEND_API_KEY;
     const notificationEmail =
-      process.env.CONTACT_NOTIFICATION_EMAIL || "withunscripted@gmail.com";
+      process.env.CONTACT_NOTIFICATION_EMAIL || "defy@theunscripted.xyz";
 
     if (apiKey) {
       // Option 1: Resend (when key is configured in Vercel env vars)
