@@ -8,7 +8,7 @@ export default function ContactSection() {
   const ref    = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
-  const [form, setForm] = useState({ name: "", email: "", company: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", company: "", message: "", _honeypot: "" });
   const [status, setStatus] = useState<FormState>("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -27,7 +27,7 @@ export default function ContactSection() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify(form), // includes _honeypot
       });
       if (res.status === 201 || res.ok) {
         setStatus("success");
@@ -154,6 +154,17 @@ export default function ContactSection() {
               noValidate
               aria-label="Contact form"
             >
+              {/* Honeypot — hidden from real users, bots fill it in */}
+              <input
+                type="text"
+                name="_honeypot"
+                value={form._honeypot}
+                onChange={handleChange}
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                style={{ opacity: 0, position: "absolute", pointerEvents: "none", height: 0, width: 0 }}
+              />
               <div
                 className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-8"
                 style={{ marginBottom: "32px" }}

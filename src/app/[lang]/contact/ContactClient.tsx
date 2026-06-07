@@ -62,7 +62,7 @@ function blurBorder(e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement |
 export default function ContactClient() {
   const [form, setForm] = useState({
     name: "", email: "", company: "",
-    service: "", howHeard: "", message: "",
+    service: "", howHeard: "", message: "", _honeypot: "",
   });
   const [status, setStatus] = useState<FormState>("idle");
   const [errorMsg, setErrorMsg] = useState("");
@@ -159,6 +159,17 @@ export default function ContactClient() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} noValidate aria-label="Contact form">
+                  {/* Honeypot — invisible to humans, bots fill it */}
+                  <input
+                    type="text"
+                    name="_honeypot"
+                    value={form._honeypot}
+                    onChange={handleChange}
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                    style={{ opacity: 0, position: "absolute", pointerEvents: "none", height: 0, width: 0 }}
+                  />
                   <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
 
                     {/* Name */}
