@@ -136,7 +136,7 @@ function ServiceCard({
   );
 }
 
-export default function ServicesSection() {
+export default function ServicesSection({ dict }: { dict?: any }) {
   const ref    = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -167,7 +167,7 @@ export default function ServicesSection() {
             marginBottom: "24px",
           }}
         >
-          WHAT WE DO
+          {dict?.overline || "WHAT WE DO"}
         </motion.p>
 
         {/* Section headline */}
@@ -185,8 +185,7 @@ export default function ServicesSection() {
             marginBottom: "24px",
           }}
         >
-          Architects of strategy.<br />
-          <span style={{ color: "#F2B705", fontStyle: "normal" }}>Storytellers with purpose.</span>
+          {dict?.headline || "Architects of strategy. Storytellers with purpose."}
         </motion.h2>
 
         {/* Intro body — original from brief */}
@@ -203,10 +202,7 @@ export default function ServicesSection() {
             marginBottom: "56px",
           }}
         >
-          We are not just a marketing and communications agency. We are
-          architects of comprehensive strategies, storytellers with a purpose,
-          and innovators pushing the boundaries of creativity. Explore our
-          diverse offerings crafted to propel you toward new heights.
+          {dict?.body || "We are not just a marketing and communications agency. We are architects of comprehensive strategies, storytellers with a purpose, and innovators pushing the boundaries of creativity. Explore our diverse offerings crafted to propel you toward new heights."}
         </motion.p>
 
         {/* Gold top rule */}
@@ -214,7 +210,7 @@ export default function ServicesSection() {
 
         {/* Service Grid */}
         <div role="list" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-16">
-          {services.map((s, i) => (
+          {(dict?.services || services).map((s: any, i: number) => (
             <ServiceCard key={s.num} {...s} index={i} inView={inView} />
           ))}
         </div>
@@ -240,7 +236,7 @@ export default function ServicesSection() {
             }}
             className="hover:opacity-70"
           >
-            Explore All Services →
+            {dict?.cta || "Explore All Services →"}
           </Link>
         </motion.div>
       </div>

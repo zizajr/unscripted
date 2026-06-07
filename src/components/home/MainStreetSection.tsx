@@ -6,7 +6,7 @@ import ThreeBarMark from "@/components/ThreeBarMark";
 
 const cities = ["KIGALI", "DOHA", "NAIROBI", "LAGOS"];
 
-export default function MainStreetSection() {
+export default function MainStreetSection({ dict }: { dict?: any }) {
   const ref    = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -49,7 +49,7 @@ export default function MainStreetSection() {
               marginBottom: "40px",
             }}
           >
-            THE FLAGSHIP SHOW
+            {dict?.overline || "THE FLAGSHIP SHOW"}
           </motion.p>
 
           {/* MAIN STREET Logo — with Violet glow */}
@@ -124,7 +124,7 @@ export default function MainStreetSection() {
               marginBottom: "24px",
             }}
           >
-            Stories Moving Markets.
+            {dict?.headline || "Stories Moving Markets."}
           </motion.h2>
 
           {/* Body */}
@@ -141,9 +141,7 @@ export default function MainStreetSection() {
               marginBottom: "40px",
             }}
           >
-            MAIN STREET is Unscripted&apos;s flagship podcast — conversations at
-            the intersection of business, capital, and emerging markets. We go
-            where the story is: Kigali, Doha, Nairobi, Lagos.
+            {dict?.body || "MAIN STREET is Unscripted's flagship podcast — conversations at the intersection of business, capital, and emerging markets. We go where the story is: Kigali, Doha, Nairobi, Lagos."}
           </motion.p>
 
           {/* City edition tags */}
@@ -191,7 +189,7 @@ export default function MainStreetSection() {
               className="btn-gold rounded-full"
               style={{ fontFamily: "var(--font-space-grotesk)" }}
             >
-              Listen Now →
+              {dict?.cta || "Listen Now →"}
             </Link>
           </motion.div>
         </div>

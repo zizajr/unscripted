@@ -13,7 +13,11 @@
     "heroSubhead": "We are the digital agency built for brands that believe in achieving the extraordinary. We don't chase trends. We build the record.",
     "startProject": "Start a Project →",
     "seeWork": "See Our Work",
-    "playSnake": "[ USE ARROW KEYS TO PLAY ]"
+    "playSnake": "[ USE ARROW KEYS TO PLAY ]",
+    "gameOver": "[ GAME OVER ]",
+    "playing": "[ PLAYING ]",
+    "hoverResume": "[ HOVER TO RESUME ]",
+    "restart": "[ USE ARROW KEYS TO PLAY / PRESS SPACE TO RESTART ]"
   },
   "footer": {
     "privacy": "Privacy Policy",
@@ -37,5 +41,75 @@
     "successTitle": "Message received.",
     "successSub": "We'll be in touch soon.",
     "errorFallback": "Something went wrong. Please email us directly at defy@theunscripted.xyz"
-  }
+  },
+  "aboutSection": {
+    "overline": "WHO WE ARE",
+    "quote": "“Our secret sauce is the ability to seamlessly blend creativity with strategy.”",
+    "body": "We are the digital agency built for brands that believe in achieving the extraordinary.",
+    "values": [
+      { "num": "01", "title": "Uncompromising Creativity", "desc": "We push boundaries with bold, editorial design and narratives that demand attention." },
+      { "num": "02", "title": "Guided Strategy", "desc": "Every campaign and design system is anchored in rigorous market insight to drive business results." },
+      { "num": "03", "title": "Cutting the Noise", "desc": "We craft targeted experiences that isolate your message from the background static." },
+      { "num": "04", "title": "Seamless Integration", "desc": "Operating as an extension of your business to execute with speed and cohesion." }
+    ],
+    "cta": "Let us know what you're building →"
+  },
+  "howWeWorkSection": {
+    "overline": "HOW WE WORK",
+    "headline": "Six principles behind every engagement.",
+    "pillars": [
+      { "num": "01", "title": "Collaborative Partnership", "body": "We view our clients as partners in a shared journey. Your vision is not just understood — it's integrated into every aspect of our execution. Your success is our success." },
+      { "num": "02", "title": "The Art of Branding", "body": "We create holistic brand experiences — integrating design, strategy, and storytelling to establish a distinctive brand identity that goes beyond visuals." },
+      { "num": "03", "title": "Innovation First", "body": "We thrive on pushing boundaries and delivering solutions that exceed expectations. From avant-garde designs to guerrilla campaigns, innovation is in our DNA." },
+      { "num": "04", "title": "Digital Prowess", "body": "From innovative digital strategies to immersive experiences, our digital expertise ensures your brand remains relevant and impactful at every touchpoint." },
+      { "num": "05", "title": "Strategic Communication", "body": "Whether crafting compelling narratives or managing crisis communication, we ensure your message resonates with your brand voice and delivers the desired result." },
+      { "num": "06", "title": "First-Principles Strategy", "body": "Every service we offer is built from first principles. Every client need is a priority — with dedicated resources ensuring every campaign, design, or narrative exceeds its goal." }
+    ]
+  },
+  "servicesSection": {
+    "overline": "WHAT WE DO",
+    "headline": "Architects of strategy. Storytellers with purpose.",
+    "body": "We are not just a marketing and communications agency. We are architects of comprehensive strategies, storytellers with a purpose, and innovators pushing the boundaries of creativity. Explore our diverse offerings crafted to propel you toward new heights.",
+    "services": [
+      { "num": "01", "name": "Design", "desc": "From logos to billboard campaigns. Visual systems that tell your unique story." },
+      { "num": "02", "name": "Copywriting", "desc": "Words that breathe life into your brand. Authenticity and clarity in every line." },
+      { "num": "03", "name": "Strategy", "desc": "Brand architecture aligned with market trends and consumer preferences." },
+      { "num": "04", "name": "Business Development", "desc": "Strategic partnerships through established stakeholder relationships." },
+      { "num": "05", "name": "Publications", "desc": "Autobiographies, ghostwriting, and magazine creation — your narrative reaching wider audiences." },
+      { "num": "06", "name": "Reputation Management", "desc": "From crafting biographies to managing crisis communication, navigating public perception with finesse." },
+      { "num": "07", "name": "Production & Multimedia", "desc": "Videography, photography, social media management, campaign production." },
+      { "num": "08", "name": "Web & App Design", "desc": "Responsive digital experiences that engage and convert." },
+      { "num": "09", "name": "Social Media Management", "desc": "Curated content, community engagement, and brand voice — keeping you relevant and resonant." },
+      { "num": "10", "name": "Media Campaign Production", "desc": "End-to-end campaign services from conceptualization to execution and distribution." },
+      { "num": "11", "name": "UIX Design", "desc": "User experience at the forefront — seamless and enjoyable digital interactions for your audience." },
+      { "num": "12", "name": "Branding & Identity", "desc": "Visual identity systems, logos, collateral — narratives that resonate." },
+      { "num": "13", "name": "Advertising", "desc": "Campaigns that are experiences — storytelling through visuals, words, and emotion." },
+      { "num": "14", "name": "Marketing & Digital", "desc": "Data-driven strategies amplifying your brand across online platforms." },
+      { "num": "15", "name": "Communications & PR", "desc": "Reputation management, media relations, crisis communication, publications." },
+      { "num": "16", "name": "Product Launches", "desc": "Meticulously planned launches — event coordination, market integration, multimedia." },
+      { "num": "17", "name": "CSR Implementation", "desc": "Meaningful CSR initiatives aligned with your brand values." }
+    ],
+    "cta": "Explore All Services →"
+  },
+  "mainStreetSection": {
+    "overline": "THE FLAGSHIP SHOW",
+    "headline": "Stories Moving Markets.",
+    "body": "MAIN STREET is Unscripted's flagship podcast — conversations at the intersection of business, capital, and emerging markets. We go where the story is: Kigali, Doha, Nairobi, Lagos.",
+    "cta": "Listen Now →"
+  },
+  "teamSection": {
+    "overline": "OUR TEAM",
+    "headline": "The heartbeat of our success.",
+    "body": "Comprising seasoned professionals with diverse expertise across marketing, strategy, technology, production, and communications. Our collective experience is the backbone of our capabilities — underscored by creativity, strategy, technology know-how, and proven industry success.",
+    "team": [
+      { "initials": "GN", "name": "Gavin Ngabonziza", "title": "Business Development & Product Lead", "bio": "8 years across finance, business, and product development. UIX Design, Product Design, and Project Management." },
+      { "initials": "BA", "name": "Bolton Abdulmalik", "title": "Creative Director", "bio": "A maestro orchestrating visual symphonies. Leads creative with an eye for detail and a passion for design." },
+      { "initials": "KE", "name": "Kayondo Edward", "title": "Co-CTO", "bio": "Full-stack and mobile engineer. Former Tech Lead for a US Presidential campaign. Co-founder of JS Kampala." }
+    ]
+  },
+  "credentialsTicker": [
+    "BRANDING", "STRATEGY", "COMMUNICATIONS", "MEDIA PRODUCTION",
+    "DIGITAL MARKETING", "PUBLIC RELATIONS", "BUSINESS DEVELOPMENT",
+    "EAST AFRICA", "MIDDLE EAST", "GLOBAL"
+  ]
 }

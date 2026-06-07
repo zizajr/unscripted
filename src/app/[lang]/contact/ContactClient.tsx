@@ -254,6 +254,16 @@ export default function ContactClient() {
                         style={{ ...inputStyle, resize: "none", lineHeight: 1.7 }}
                         placeholder="Tell us about your project…"
                         onFocus={focusBorder} onBlur={blurBorder} />
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "8px" }}>
+                        <span style={{ 
+                          fontFamily: "var(--font-body)", 
+                          fontSize: "12px", 
+                          color: form.message.length < 20 ? "#F2B705" : "rgba(248,245,238,0.4)",
+                          transition: "color 0.2s ease"
+                        }}>
+                          {form.message.length} / 20 minimum characters
+                        </span>
+                      </div>
                     </div>
 
                     {/* Error */}
@@ -265,19 +275,21 @@ export default function ContactClient() {
                     )}
 
                     {/* Submit */}
-                    <button type="submit" disabled={status === "sending"}
+                    <button type="submit" disabled={status === "sending" || form.message.length < 20}
                       style={{
-                        background: status === "sending" ? "rgba(242,183,5,0.5)" : "#F2B705",
+                        background: (status === "sending" || form.message.length < 20) ? "rgba(242,183,5,0.5)" : "#F2B705",
                         color: "#0A0A0A",
                         fontFamily: "var(--font-bebas)",
                         fontSize: 16,
                         letterSpacing: "0.15em",
                         padding: "18px 48px",
                         border: "none",
-                        cursor: status === "sending" ? "not-allowed" : "pointer",
-                        transition: "background 300ms ease",
+                        cursor: (status === "sending" || form.message.length < 20) ? "not-allowed" : "pointer",
+                        transition: "background 300ms ease, transform 200ms ease",
                         alignSelf: "flex-start",
-                      }}>
+                      }}
+                      className={form.message.length >= 20 && status !== "sending" ? "hover:scale-[1.01]" : ""}
+                    >
                       {status === "sending" ? "SENDING…" : "SEND MESSAGE →"}
                     </button>
                   </div>

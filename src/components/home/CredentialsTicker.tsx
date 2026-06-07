@@ -8,10 +8,9 @@ const TICKER_ITEMS = [
   "EAST AFRICA", "MIDDLE EAST", "GLOBAL",
 ];
 
-// Repeat twice for seamless loop
-const items = [...TICKER_ITEMS, ...TICKER_ITEMS];
-
-export default function CredentialsTicker() {
+export default function CredentialsTicker({ dict }: { dict?: string[] }) {
+  const tickerItems = dict || TICKER_ITEMS;
+  const items = [...tickerItems, ...tickerItems];
   const ref    = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true });
 
@@ -70,7 +69,7 @@ export default function CredentialsTicker() {
 
       {/* Accessible list for screen readers */}
       <ul className="sr-only">
-        {TICKER_ITEMS.map((item) => (
+        {tickerItems.map((item) => (
           <li key={item}>{item}</li>
         ))}
       </ul>

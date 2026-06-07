@@ -172,7 +172,7 @@ function TeamCard({
   );
 }
 
-export default function TeamSection() {
+export default function TeamSection({ dict }: { dict?: any }) {
   const ref    = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -211,7 +211,7 @@ export default function TeamSection() {
               marginBottom: "24px",
             }}
           >
-            OUR TEAM
+            {dict?.overline || "OUR TEAM"}
           </motion.p>
 
           {/* Headline */}
@@ -229,7 +229,7 @@ export default function TeamSection() {
               marginBottom: "24px",
             }}
           >
-            The heartbeat<br />of our success.
+            {dict?.headline || "The heartbeat of our success."}
           </motion.h2>
 
           {/* Intro */}
@@ -246,16 +246,12 @@ export default function TeamSection() {
               marginBottom: "64px",
             }}
           >
-            Comprising seasoned professionals with diverse expertise across
-            marketing, strategy, technology, production, and communications.
-            Our collective experience is the backbone of our capabilities —
-            underscored by creativity, strategy, technology know-how, and
-            proven industry success.
+            {dict?.body || "Comprising seasoned professionals with diverse expertise across marketing, strategy, technology, production, and communications. Our collective experience is the backbone of our capabilities — underscored by creativity, strategy, technology know-how, and proven industry success."}
           </motion.p>
 
           {/* 3-column grid to balance 3 members */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {team.map((member, i) => (
+            {(dict?.team || team).map((member: any, i: number) => (
               <TeamCard key={member.name} {...member} index={i} inView={inView} />
             ))}
           </div>

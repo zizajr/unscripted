@@ -16,7 +16,7 @@ const FADE_UP = {
   }),
 };
 
-export default function AboutSection() {
+export default function AboutSection({ dict }: { dict?: any }) {
   const ref    = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -48,7 +48,7 @@ export default function AboutSection() {
             marginBottom: "32px",
           }}
         >
-          WHO WE ARE
+          {dict?.overline || "WHO WE ARE"}
         </motion.p>
 
         {/* Pull quote */}
@@ -69,8 +69,7 @@ export default function AboutSection() {
             marginBottom: "64px",
           }}
         >
-          &ldquo;Our secret sauce is the ability to seamlessly blend
-          creativity with strategy.&rdquo;
+          {dict?.quote || "“Our secret sauce is the ability to seamlessly blend creativity with strategy.”"}
         </motion.blockquote>
 
         {/* Gold rule */}
@@ -106,13 +105,13 @@ export default function AboutSection() {
                 lineHeight: 1.3,
               }}
             >
-              We are the digital agency built for brands that believe in achieving the extraordinary.
+              {dict?.body || "We are the digital agency built for brands that believe in achieving the extraordinary."}
             </p>
           </div>
 
           {/* Right Column: Values Grid */}
           <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-8">
-            {[
+            {(dict?.values || [
               {
                 num: "01",
                 title: "Uncompromising Creativity",
@@ -133,7 +132,7 @@ export default function AboutSection() {
                 title: "Seamless Integration",
                 desc: "Operating as an extension of your business to execute with speed and cohesion.",
               },
-            ].map((item) => (
+            ]).map((item: any) => (
               <div key={item.title} className="flex flex-col gap-3">
                 <span
                   style={{
@@ -195,7 +194,7 @@ export default function AboutSection() {
             }}
             className="hover:opacity-70"
           >
-            Let us know what you&apos;re building →
+            {dict?.cta || "Let us know what you're building →"}
           </Link>
         </motion.div>
       </div>

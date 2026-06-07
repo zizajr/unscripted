@@ -223,7 +223,7 @@ function SnakeGame({ size, dict }: { size: number, dict?: any }) {
           if (labelRef.current) labelRef.current.textContent = dict?.playSnake || "[ USE ARROW KEYS TO PLAY ]";
         }, 2000);
       }
-      if (labelRef.current) labelRef.current.textContent = "[ GAME OVER ]";
+      if (labelRef.current) labelRef.current.textContent = dict?.gameOver || "[ GAME OVER ]";
       return;
     }
 
@@ -235,7 +235,7 @@ function SnakeGame({ size, dict }: { size: number, dict?: any }) {
       s.glowing = true;
       if (s.glowTimer != null) clearTimeout(s.glowTimer);
       s.glowTimer = setTimeout(() => { s.glowing = false; }, 400);
-      if (labelRef.current) labelRef.current.textContent = "[ PLAYING ]";
+      if (labelRef.current) labelRef.current.textContent = dict?.playing || "[ PLAYING ]";
     } else {
       s.snake.pop();
     }
@@ -333,7 +333,7 @@ function SnakeGame({ size, dict }: { size: number, dict?: any }) {
       s.paused = false;
       if (s.timer != null) clearTimeout(s.timer);
       s.timer = setTimeout(tick, SPEED);
-      if (labelRef.current) labelRef.current.textContent = "[ PLAYING ]";
+      if (labelRef.current) labelRef.current.textContent = dict?.playing || "[ PLAYING ]";
     }
   };
 
@@ -342,7 +342,7 @@ function SnakeGame({ size, dict }: { size: number, dict?: any }) {
     if (!s.paused && s.alive) {
       s.paused = true;
       if (s.timer != null) clearTimeout(s.timer);
-      if (labelRef.current) labelRef.current.textContent = "[ HOVER TO RESUME ]";
+      if (labelRef.current) labelRef.current.textContent = dict?.hoverResume || "[ HOVER TO RESUME ]";
     }
   };
 
@@ -374,7 +374,7 @@ function SnakeGame({ size, dict }: { size: number, dict?: any }) {
           color: "rgba(242,183,5,0.5)",
         }}
       >
-        {dict?.playSnake || "[ USE ARROW KEYS TO PLAY / PRESS SPACE TO RESTART ]"}
+        {dict?.restart || "[ USE ARROW KEYS TO PLAY / PRESS SPACE TO RESTART ]"}
       </div>
     </div>
   );

@@ -10,10 +10,14 @@
     "heroOverline": "IMAGE DE MARQUE · STRATÉGIE · COMMUNICATIONS",
     "heroDefy": "Nous Défions",
     "heroReason": "La Raison.",
-    "heroSubhead": "Nous sommes une agence de médias, d'image de marque et de communication conçue pour les marques qui croient en l'atteinte de l'extraordinaire. Nous ne suivons pas les tendances. Nous créons l'histoire.",
+    "heroSubhead": "Nous sommes l'agence numérique conçue pour les marques qui croient en l'atteinte de l'extraordinaire. Nous ne suivons pas les tendances. Nous créons l'histoire.",
     "startProject": "Démarrer un projet →",
     "seeWork": "Voir Nos Réalisations",
-    "playSnake": "[ UTILISEZ LES FLÈCHES POUR JOUER ]"
+    "playSnake": "[ UTILISEZ LES FLÈCHES POUR JOUER ]",
+    "gameOver": "[ PARTIE TERMINÉE ]",
+    "playing": "[ EN JEU ]",
+    "hoverResume": "[ SURVOLEZ POUR REPRENDRE ]",
+    "restart": "[ UTILISEZ LES FLÈCHES / ESPACE POUR RECOMMENCER ]"
   },
   "footer": {
     "privacy": "Politique de confidentialité",
@@ -37,5 +41,75 @@
     "successTitle": "Message reçu.",
     "successSub": "Nous vous contacterons bientôt.",
     "errorFallback": "Une erreur s'est produite. Veuillez nous écrire directement à defy@theunscripted.xyz"
-  }
+  },
+  "aboutSection": {
+    "overline": "QUI NOUS SOMMES",
+    "quote": "« Notre ingrédient secret est la capacité à fusionner harmonieusement la créativité avec la stratégie. »",
+    "body": "Nous sommes l'agence numérique conçue pour les marques qui croient en l'atteinte de l'extraordinaire.",
+    "values": [
+      { "num": "01", "title": "Créativité Intransigeante", "desc": "Nous repoussons les limites avec des designs éditoriaux audacieux et des récits qui attirent l'attention." },
+      { "num": "02", "title": "Stratégie Guidée", "desc": "Chaque campagne et système de design est ancré dans une analyse de marché rigoureuse pour stimuler les résultats commerciaux." },
+      { "num": "03", "title": "Ciblage Précis", "desc": "Nous concevons des expériences ciblées qui isolent votre message du bruit de fond." },
+      { "num": "04", "title": "Intégration Transparente", "desc": "Nous opérons comme une extension de votre entreprise pour exécuter avec rapidité et cohésion." }
+    ],
+    "cta": "Dites-nous ce que vous construisez →"
+  },
+  "howWeWorkSection": {
+    "overline": "NOTRE MÉTHODE",
+    "headline": "Six principes derrière chaque engagement.",
+    "pillars": [
+      { "num": "01", "title": "Partenariat Collaboratif", "body": "Nous considérons nos clients comme des partenaires. Votre vision n'est pas seulement comprise — elle est intégrée dans chaque aspect de notre exécution. Votre succès est le nôtre." },
+      { "num": "02", "title": "L'Art du Branding", "body": "Nous créons des expériences de marque holistiques — intégrant le design, la stratégie et la narration pour établir une identité de marque distinctive qui va au-delà des visuels." },
+      { "num": "03", "title": "L'Innovation D'abord", "body": "Nous aimons repousser les limites et proposer des solutions qui dépassent les attentes. Des designs avant-gardistes aux campagnes percutantes, l'innovation est dans notre ADN." },
+      { "num": "04", "title": "Prouesse Numérique", "body": "Qu'il s'agisse de stratégies numériques innovantes ou d'expériences immersives, notre expertise numérique garantit que votre marque reste pertinent et impactante." },
+      { "num": "05", "title": "Communication Stratégique", "body": "Qu'il s'agisse d'élaborer des récits convaincants ou de gérer la communication de crise, nous veillons à ce que votre message résonne avec la voix de votre marque." },
+      { "num": "06", "title": "Stratégie de Principes Premiers", "body": "Chaque service que nous offrons repose sur des principes fondamentaux. Chaque besoin client est une priorité, garantissant que chaque projet dépasse ses objectifs." }
+    ]
+  },
+  "servicesSection": {
+    "overline": "CE QUE NOUS FAISONS",
+    "headline": "Architectes de la stratégie. Conteurs engagés.",
+    "body": "Nous ne sommes pas seulement une agence de marketing et de communication. Nous sommes des architectes de stratégies complètes, des conteurs avec un objectif précis, et des innovateurs repoussant les limites de la créativité. Découvrez nos offres diversifiées conçues pour vous propulser vers de nouveaux sommets.",
+    "services": [
+      { "num": "01", "name": "Design", "desc": "Des logos aux campagnes d'affichage. Des systèmes visuels qui racontent votre histoire unique." },
+      { "num": "02", "name": "Rédaction", "desc": "Des mots qui donnent vie à votre marque. Authenticité et clarté à chaque ligne." },
+      { "num": "03", "name": "Stratégie", "desc": "Une architecture de marque alignée sur les tendances du marché et les préférences des consommateurs." },
+      { "num": "04", "name": "Développement Commercial", "desc": "Partenariats stratégiques grâce à des relations établies avec les parties prenantes." },
+      { "num": "05", "name": "Publications", "desc": "Autobiographies, prête-plume et création de magazines — votre récit atteint de plus larges publics." },
+      { "num": "06", "name": "Gestion de la Réputation", "desc": "De la rédaction de biographies à la gestion de communication de crise, naviguer dans la perception publique avec finesse." },
+      { "num": "07", "name": "Production & Multimédia", "desc": "Vidéographie, photographie, gestion des réseaux sociaux, production de campagnes." },
+      { "num": "08", "name": "Design Web & App", "desc": "Des expériences numériques réactives qui engagent et convertissent." },
+      { "num": "09", "name": "Gestion des Réseaux Sociaux", "desc": "Contenu soigné, engagement communautaire et voix de la marque — pour rester pertinent." },
+      { "num": "10", "name": "Production de Campagnes", "desc": "Services de campagne de bout en bout, de la conceptualisation à l'exécution et la distribution." },
+      { "num": "11", "name": "Design UIX", "desc": "L'expérience utilisateur au premier plan — des interactions numériques fluides et agréables." },
+      { "num": "12", "name": "Branding & Identité", "desc": "Systèmes d'identité visuelle, logos, supports — des récits qui résonnent." },
+      { "num": "13", "name": "Publicité", "desc": "Des campagnes qui sont des expériences — raconter des histoires par les visuels, les mots et l'émotion." },
+      { "num": "14", "name": "Marketing & Digital", "desc": "Stratégies basées sur les données amplifiant votre marque sur les plateformes en ligne." },
+      { "num": "15", "name": "Communications & RP", "desc": "Gestion de la réputation, relations médias, communication de crise, publications." },
+      { "num": "16", "name": "Lancements de Produits", "desc": "Lancements méticuleusement planifiés — coordination d'événements, intégration au marché, multimédia." },
+      { "num": "17", "name": "Implémentation RSE", "desc": "Initiatives RSE significatives alignées sur les valeurs de votre marque." }
+    ],
+    "cta": "Explorer Tous Les Services →"
+  },
+  "mainStreetSection": {
+    "overline": "L'ÉMISSION PHARE",
+    "headline": "Des histoires qui font bouger les marchés.",
+    "body": "MAIN STREET est le podcast phare d'Unscripted — des conversations à l'intersection des affaires, du capital et des marchés émergents. Nous allons là où est l'histoire : Kigali, Doha, Nairobi, Lagos.",
+    "cta": "Écouter Maintenant →"
+  },
+  "teamSection": {
+    "overline": "NOTRE ÉQUIPE",
+    "headline": "Le cœur de notre succès.",
+    "body": "Composée de professionnels chevronnés aux expertises diverses en marketing, stratégie, technologie, production et communication. Notre expérience collective est la colonne vertébrale de nos capacités.",
+    "team": [
+      { "initials": "GN", "name": "Gavin Ngabonziza", "title": "Responsable Développement & Produit", "bio": "8 ans en finance, affaires et développement de produits. Design UIX et Gestion de projet." },
+      { "initials": "BA", "name": "Bolton Abdulmalik", "title": "Directeur Créatif", "bio": "Un maestro orchestrant des symphonies visuelles. Dirige la création avec le souci du détail et la passion du design." },
+      { "initials": "KE", "name": "Kayondo Edward", "title": "Co-CTO", "bio": "Ingénieur full-stack et mobile. Ancien responsable technique d'une campagne présidentielle américaine. Co-fondateur de JS Kampala." }
+    ]
+  },
+  "credentialsTicker": [
+    "BRANDING", "STRATÉGIE", "COMMUNICATIONS", "PRODUCTION MÉDIA",
+    "MARKETING DIGITAL", "RELATIONS PUBLIQUES", "DÉVELOPPEMENT COMMERCIAL",
+    "AFRIQUE DE L'EST", "MOYEN-ORIENT", "MONDIAL"
+  ]
 }

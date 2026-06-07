@@ -1,4 +1,5 @@
 import "server-only";
+// Cache bust 1
 
 const dictionaries = {
   en: () => import("./dictionaries/en.json").then((module) => module.default),

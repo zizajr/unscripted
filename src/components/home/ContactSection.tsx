@@ -12,7 +12,7 @@ const BUDGET_RANGES = [
   "$25,000+"
 ];
 
-export default function ContactSection() {
+export default function ContactSection({ dict }: { dict?: any }) {
   const ref    = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -105,8 +105,8 @@ export default function ContactSection() {
             marginBottom: "40px",
           }}
         >
-          Let&apos;s Build<br />
-          <em style={{ fontStyle: "italic", color: "#F2B705" }}>Something.</em>
+          {dict?.title1 || "Let's Build"}<br />
+          <em style={{ fontStyle: "italic", color: "#F2B705" }}>{dict?.title2 || "Something."}</em>
         </motion.h2>
 
         {/* Email */}
@@ -147,7 +147,7 @@ export default function ContactSection() {
                   marginBottom: "12px",
                 }}
               >
-                Message received.
+                {dict?.successTitle || "Message received."}
               </p>
               <p
                 style={{
@@ -156,7 +156,7 @@ export default function ContactSection() {
                   color: "rgba(248,245,238,0.65)",
                 }}
               >
-                We&apos;ll be in touch soon.
+                {dict?.successSub || "We'll be in touch soon."}
               </p>
             </div>
           ) : (
@@ -183,7 +183,7 @@ export default function ContactSection() {
                 {/* Name */}
                 <div>
                   <label htmlFor="contact-name" style={labelStyle}>
-                    NAME *
+                    {dict?.nameLabel || "NAME *"}
                   </label>
                   <input
                     id="contact-name"
@@ -204,7 +204,7 @@ export default function ContactSection() {
                 {/* Email */}
                 <div>
                   <label htmlFor="contact-email" style={labelStyle}>
-                    EMAIL *
+                    {dict?.emailLabel || "EMAIL *"}
                   </label>
                   <input
                     id="contact-email"
@@ -224,7 +224,7 @@ export default function ContactSection() {
                 {/* Company */}
                 <div>
                   <label htmlFor="contact-company" style={labelStyle}>
-                    COMPANY
+                    {dict?.companyLabel || "COMPANY"}
                   </label>
                   <input
                     id="contact-company"
@@ -242,7 +242,7 @@ export default function ContactSection() {
                 {/* Budget */}
                 <div>
                   <label htmlFor="contact-budget" style={labelStyle}>
-                    BUDGET *
+                    {dict?.budgetLabel || "BUDGET *"}
                   </label>
                   <select
                     id="contact-budget"
@@ -255,7 +255,7 @@ export default function ContactSection() {
                     onFocus={(e) => (e.target.style.borderBottomColor = "#F2B705")}
                     onBlur={(e) => (e.target.style.borderBottomColor = "rgba(248,245,238,0.2)")}
                   >
-                    <option value="" disabled style={{ background: "#0A0A0A" }}>Select a budget range…</option>
+                    <option value="" disabled style={{ background: "#0A0A0A" }}>{dict?.selectBudget || "Select a budget range…"}</option>
                     {BUDGET_RANGES.map((b) => (
                       <option key={b} value={b} style={{ background: "#0A0A0A" }}>{b}</option>
                     ))}
@@ -265,7 +265,7 @@ export default function ContactSection() {
                 {/* Message */}
                 <div className="sm:col-span-2">
                   <label htmlFor="contact-message" style={labelStyle}>
-                    MESSAGE * (20 - 2,000 characters)
+                    {dict?.messageLabel || "MESSAGE * (20 - 2,000 characters)"}
                   </label>
                   <textarea
                     id="contact-message"
@@ -278,10 +278,19 @@ export default function ContactSection() {
                     value={form.message}
                     onChange={handleChange}
                     style={{ ...inputStyle, resize: "none", lineHeight: 1.7 }}
-                    placeholder="Tell us about your project…"
-                    onFocus={(e) => (e.target.style.borderBottomColor = "#F2B705")}
+                    placeholder={dict?.messagePlaceholder || "Tell us about your project…"}
                     onBlur={(e) => (e.target.style.borderBottomColor = "rgba(248,245,238,0.2)")}
                   />
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "8px" }}>
+                    <span style={{ 
+                      fontFamily: "var(--font-body)", 
+                      fontSize: "12px", 
+                      color: form.message.length < 20 ? "#F2B705" : "rgba(248,245,238,0.4)",
+                      transition: "color 0.2s ease"
+                    }}>
+                      {form.message.length} / 20 minimum characters
+                    </span>
+                  </div>
                 </div>
               </div>
 
@@ -304,21 +313,21 @@ export default function ContactSection() {
               {/* Submit */}
               <button
                 type="submit"
-                disabled={status === "sending"}
+                disabled={status === "sending" || form.message.length < 20}
                 style={{
-                  background: status === "sending" ? "rgba(242,183,5,0.5)" : "#F2B705",
+                  background: (status === "sending" || form.message.length < 20) ? "rgba(242,183,5,0.5)" : "#F2B705",
                   color: "#0A0A0A",
                   fontFamily: "var(--font-bebas)",
                   fontSize: "16px",
                   letterSpacing: "0.15em",
                   padding: "18px 48px",
                   border: "none",
-                  cursor: status === "sending" ? "not-allowed" : "pointer",
+                  cursor: (status === "sending" || form.message.length < 20) ? "not-allowed" : "pointer",
                   transition: "background 300ms ease, transform 200ms ease",
                 }}
-                className="hover:scale-[1.01]"
+                className={form.message.length >= 20 && status !== "sending" ? "hover:scale-[1.01]" : ""}
               >
-                {status === "sending" ? "SENDING…" : "SEND MESSAGE →"}
+                {status === "sending" ? (dict?.sendingBtn || "SENDING…") : (dict?.sendBtn || "SEND MESSAGE →")}
               </button>
             </form>
           )}

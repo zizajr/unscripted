@@ -113,7 +113,7 @@ function PillarCard({
   );
 }
 
-export default function HowWeWorkSection() {
+export default function HowWeWorkSection({ dict }: { dict?: any }) {
   const ref    = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -153,7 +153,7 @@ export default function HowWeWorkSection() {
               marginBottom: "24px",
             }}
           >
-            HOW WE WORK
+            {dict?.overline || "HOW WE WORK"}
           </motion.p>
 
           {/* Section headline */}
@@ -172,7 +172,7 @@ export default function HowWeWorkSection() {
               maxWidth: 600,
             }}
           >
-            Six principles behind<br />every engagement.
+            {dict?.headline || "Six principles behind every engagement."}
           </motion.h2>
 
           {/* 3×2 grid */}
@@ -180,7 +180,7 @@ export default function HowWeWorkSection() {
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px"
             style={{ background: "rgba(242,183,5,0.08)" }}
           >
-            {pillars.map((p, i) => (
+            {(dict?.pillars || pillars).map((p: any, i: number) => (
               <PillarCard key={p.num} {...p} index={i} inView={inView} />
             ))}
           </div>
