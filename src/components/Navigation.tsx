@@ -156,9 +156,33 @@ export default function Navigation({ dict, lang }: { dict: any; lang: string }) 
             </Link>
           </nav>
 
+          {/* Mobile Language Switcher */}
+          <div
+            className="flex md:hidden items-center gap-2 text-xs text-cream/40 ml-auto mr-4"
+            style={{ fontFamily: "var(--font-accent)", letterSpacing: "0.1em" }}
+          >
+            {langOptions.map(({ code, label }, i) => (
+              <span key={code} className="flex items-center gap-2">
+                <button
+                  onClick={() => handleLangSwitch(code)}
+                  className={`transition-colors duration-200 cursor-pointer ${
+                    lang === code ? "text-gold" : "text-cream/40 hover:text-cream/70"
+                  }`}
+                  aria-label={`Switch to ${label}`}
+                  aria-pressed={lang === code}
+                >
+                  {label}
+                </button>
+                {i < langOptions.length - 1 && (
+                  <span className="text-cream/20">·</span>
+                )}
+              </span>
+            ))}
+          </div>
+
           {/* Mobile hamburger */}
           <button
-            className="md:hidden flex flex-col gap-1.5 p-2 ml-auto"
+            className="md:hidden flex flex-col gap-1.5 p-2"
             onClick={() => setOpen(!open)}
             aria-label={open ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={open}
@@ -195,7 +219,7 @@ export default function Navigation({ dict, lang }: { dict: any; lang: string }) 
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3, ease: [0.21, 0.47, 0.32, 0.98] }}
-            className="fixed inset-0 z-40 flex flex-col"
+            className="fixed inset-0 z-[60] flex flex-col"
             style={{ background: "#0A0A0A" }}
           >
             {/* Header row in overlay */}

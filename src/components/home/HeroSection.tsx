@@ -472,7 +472,7 @@ export default function HeroSection({ dict, lang }: { dict?: any, lang?: string 
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex items-center overflow-hidden"
+      className="relative min-h-screen flex items-start lg:items-center overflow-hidden"
       style={{ background: "#0A0A0A" }}
       aria-label="Hero"
     >
