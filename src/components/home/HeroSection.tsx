@@ -574,9 +574,6 @@ export default function HeroSection({ dict, lang }: { dict?: any, lang?: string 
             <Link href={`/${lang}/contact`} className="btn-gold rounded-full">
               {dict?.startProject || "Start a Project →"}
             </Link>
-            <Link href={`/${lang}/work`} className="btn-outline-cream rounded-full">
-              {dict?.seeWork || "See Our Work"}
-            </Link>
           </motion.div>
         </div>
 

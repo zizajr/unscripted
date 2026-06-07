@@ -253,8 +253,8 @@ export default function TeamSection() {
             proven industry success.
           </motion.p>
 
-          {/* 2×2 grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* 3-column grid to balance 3 members */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {team.map((member, i) => (
               <TeamCard key={member.name} {...member} index={i} inView={inView} />
             ))}
