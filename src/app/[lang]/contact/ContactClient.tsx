@@ -89,14 +89,17 @@ export default function ContactClient() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
+      
+      const data = await res.json().catch(() => null);
+      
       if (res.status === 201 || res.ok) {
         setStatus("success");
       } else {
-        throw new Error();
+        throw new Error(data?.error || "Submission failed");
       }
-    } catch {
+    } catch (err: any) {
       setStatus("error");
-      setErrorMsg("Something went wrong. Please email us directly at defy@theunscripted.xyz");
+      setErrorMsg(err.message || "Something went wrong. Please email us directly at defy@theunscripted.xyz");
     }
   };
 
