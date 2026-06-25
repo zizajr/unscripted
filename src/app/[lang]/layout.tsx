@@ -89,17 +89,20 @@ export default async function RootLayout({
   params: Promise<{ lang: string }>;
 }>) {
   const { lang } = await params;
-  const dir = lang === "ar" ? "rtl" : "ltr";
-  const dict = await getDictionary(lang as "en" | "fr" | "ar");
+  const resolvedLang = lang || "en";
+  const dir = resolvedLang === "ar" ? "rtl" : "ltr";
+  const dict = await getDictionary(resolvedLang as "en" | "fr" | "ar");
   
   return (
-    <html lang={lang} dir={dir}>
+    <html lang={resolvedLang} dir={dir}>
       <body
         className={`${playfair.variable} ${outfit.variable} ${bebasNeue.variable}`}
       >
-        <Navigation dict={dict.nav} lang={lang} />
-        <main>{children}</main>
-        <Footer dict={dict.footer} />
+        <Navigation dict={dict.nav} lang={resolvedLang} />
+        <main id="main-content" className="flex-1 focus:outline-none" tabIndex={-1}>
+          {children}
+        </main>
+        <Footer dict={dict.footer} lang={resolvedLang} />
         <Analytics />
         <script
           type="application/ld+json"

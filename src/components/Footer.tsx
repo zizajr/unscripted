@@ -1,19 +1,20 @@
 import Link from "next/link";
 import ThreeBarMark from "./ThreeBarMark";
 
-export default function Footer({ dict }: { dict: any }) {
+export default function Footer({ dict, lang }: { dict: any; lang?: string }) {
   const year = new Date().getFullYear();
+  const prefix = lang ? `/${lang}` : "";
 
   const navLinks = [
-    { href: "/about",    label: dict.about },
-    { href: "/services", label: dict.services },
-    { href: "/main-street", label: "MAIN STREET" },
-    { href: "/contact",  label: dict.contact },
+    { href: `${prefix}/about`,    label: dict.about },
+    { href: `${prefix}/services`, label: dict.services },
+    { href: `${prefix}/main-street`, label: "MAIN STREET" },
+    { href: `${prefix}/contact`,  label: dict.contact },
   ];
 
   const legalLinks = [
-    { href: "/privacy-policy", label: dict.privacy },
-    { href: "/terms",          label: dict.terms },
+    { href: `${prefix}/privacy-policy`, label: dict.privacy },
+    { href: `${prefix}/terms`,          label: dict.terms },
   ];
 
   return (
