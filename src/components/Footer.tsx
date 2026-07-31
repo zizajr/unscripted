@@ -75,20 +75,37 @@ export default function Footer({ dict, lang }: { dict: any; lang?: string }) {
             ))}
           </nav>
 
-          {/* Email */}
-          <a
-            href="mailto:defy@theunscripted.xyz"
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "14px",
-              fontWeight: 600,
-              color: "#F2B705",
-              transition: "color 0.2s ease",
-            }}
-            className="hover:text-cream shrink-0"
-          >
-            defy@theunscripted.xyz
-          </a>
+          {/* Email & Socials */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 shrink-0">
+            <a
+              href="https://www.instagram.com/studio_unscripted_?igsh=aHhia2VpbjBubWE4"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontFamily: "var(--font-body)",
+                fontSize: "14px",
+                fontWeight: 600,
+                color: "rgba(248,245,238,0.5)",
+                transition: "color 0.2s ease",
+              }}
+              className="hover:text-cream"
+            >
+              Instagram
+            </a>
+            <a
+              href="mailto:defy@theunscripted.xyz"
+              style={{
+                fontFamily: "var(--font-body)",
+                fontSize: "14px",
+                fontWeight: 600,
+                color: "#F2B705",
+                transition: "color 0.2s ease",
+              }}
+              className="hover:text-cream"
+            >
+              defy@theunscripted.xyz
+            </a>
+          </div>
         </div>
 
         {/* Divider */}
